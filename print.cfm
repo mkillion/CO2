@@ -1,5 +1,6 @@
 
 <!---
+*
 *	Adding new layers or moving code to a new app:
 *	Add a <cfif Find("water",VisibleLayers)> <cfimage... block for each new layer.
 *	The layer designator (e.g. "water") must match the table of contents checkbox id name in index.cfm.
