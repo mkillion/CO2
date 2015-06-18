@@ -1,0 +1,81 @@
+8
+
+dir
+4
+svn://ion.kgs.ku.edu/field_viewer_AGS_JS/images
+svn://ion.kgs.ku.edu/field_viewer_AGS_JS
+
+
+
+2008-04-18T16:36:27.859375Z
+4
+mike
+
+
+svn:special svn:externals svn:needs-lock
+
+or.jpg
+file
+13
+
+
+
+2008-05-06T20:33:56.421875Z
+38b58678b31dbeec5fcabfdf4901c944
+2008-05-12T14:47:53.765625Z
+13
+mike
+has-props
+
+loading.gif
+file
+
+
+
+
+2008-03-27T20:08:35.500000Z
+534bd0938c30620ec6a8440ed512cbed
+2008-04-18T16:36:27.859375Z
+4
+mike
+has-props
+
+kgs_logo.png
+file
+
+
+
+
+2006-11-21T02:33:28.093750Z
+925cc8205d873804a15aee9a94c9652e
+2008-04-18T16:36:27.859375Z
+4
+mike
+has-props
+
+blue_gradient.gif
+file
+
+
+
+
+2008-02-19T16:03:45.125000Z
+cce50992ac2b8d379040391fc4a76950
+2008-04-18T16:36:27.859375Z
+4
+mike
+has-props
+
+well_sym.jpg
+file
+42
+
+
+
+2008-09-29T15:05:09.078125Z
+b38b8f76523fa8177fa50caad1d780d9
+2008-10-10T14:42:49.437500Z
+42
+mike
+has-props
+

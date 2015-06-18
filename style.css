@@ -1,0 +1,127 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0; 
+    padding: 0;
+}
+
+body {
+	background-color:whitesmoke;
+	overflow:hidden;
+	}
+	
+.dijitTitlePaneTextNode  {
+	color:#000000;
+	}
+
+#footer {
+	background:url(images/gold_bottom.jpg) repeat-x;
+	height:23px;
+	text-align:center;
+	}
+
+#header {
+	background-color:#0013AA;	
+	}
+	
+.info_label {
+	font:normal normal normal 11px Arial;
+	color:#CC0000;
+	}
+
+.info_text {
+	font:normal normal normal 11px Arial;
+	}
+	
+.input {
+	font:normal normal normal 12px Arial;
+	padding:2px;
+	}
+	
+.label {
+	font:normal normal bold 12px Arial;
+	text-align:right;
+	}
+	
+#loading {
+	height: 100%;
+	width: 100%;
+	background: #98B2CB;
+	/*background: #BFBFBF;*/
+}
+
+#loading_img {
+	position: absolute;
+	top: 20px;
+	left: 10px;
+}
+
+.#loading_msg {
+    color: #000;
+}
+	
+#logo_bar {
+	margin:auto;
+	margin-top:5px;
+	text-align:center;
+	}
+	
+.note {
+	font:normal normal normal 10px Arial;
+	}
+	
+#ovmap_div {
+	background-color:#FFFFFF;
+	width:195px;
+	height:138px;
+	border:solid thick #0000CC;
+	z-index:5;
+	position:relative;
+	top:150px;
+	left:15px;
+	}
+	
+#scalebar_div {
+	position:relative;
+	top:-60px;
+	left:50px;
+	z-index:2000;
+	display:block;
+	}
+	
+#sidebar {
+	background-color:#FFFFFF;
+	width:255px;
+	font:normal normal normal 12px Arial;
+	overflow:hidden;
+	}
+	
+.soria .dijitMenuItem {	/*FilteringSelect menu*/
+	font:normal normal normal 12px Arial;
+	}
+	
+.tabLabel {
+	font:normal normal bold 11px arial;
+	padding:3px;
+	}
+
+.tiertwocheckbox {
+	padding-left:18px;
+	}
+
+#toolbar {
+	background:url(images/gold_top.jpg) repeat-x;
+	/*background-color:#D4E3FB;*/
+	padding-top:3px;
+	padding-left:5px;
+	margin:auto;
+	height:28px;
+	}
+	
+.tool_link {
+	font:normal normal bold 12px Arial;
+	color:#000000;
+	text-decoration:none;
+	cursor:pointer;
+	}
+
