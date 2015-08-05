@@ -62,14 +62,14 @@
     th {
         border-right: 1px solid gray;
     }
-    
+
     ##geollayerpicker td {
         background-color: ##ddd;
         font: normal normal normal 14px arial;
         vertical-align: top;
     }
-    
-   
+
+
 </style>
 
 <script src="js/show_loading.js"></script>
@@ -99,12 +99,12 @@
   	dojo.require("dojo.dnd.move");
   	dojo.require("esri.dijit.Scalebar");
 	dojo.require("esri.layers.graphics");
-	
+
 	dojo.require("esri.layers.FeatureLayer");
 	dojo.require("esri.tasks.GenerateRendererTask");
     dojo.require("esri.dijit.Legend");
 	dojo.require("esri.tasks.PrintTask");
-	
+
 	var app = {};
 
 	var ovmap;
@@ -112,7 +112,7 @@
 	var identify, identifyParams;
 	var currField = "";
 	var filter, wwc5_filter;
-	var label; 
+	var label;
 	var visibleWellLyr;
 	var lastLocType, lastLocValue;
 	var xSectionKIDS = new Array();
@@ -137,10 +137,10 @@
 		showLoading();
 		dojo.parser.parse();
     	hideLoading();
-		
+
 		esri.config.defaults.io.proxyUrl = 'http://maps.kgs.ku.edu/proxy.jsp';
         //esri.config.defaults.io.timeout = 2000;
-		
+
 		sr = new esri.SpatialReference({ wkid:3857 });
 		var initExtent = new esri.geometry.Extent(-11267810, 4420699, -10719558, 4632090, sr);
 
@@ -151,7 +151,7 @@
 			dojo.connect(dijit.byId('map_div'), 'resize', function(){
 				resizeMap();
 			});
-			
+
 
 			dojo.connect(app.map, "onClick", executeIdTask);
 			dojo.connect(app.map, "onExtentChange", setScaleDependentTOC);
@@ -165,14 +165,14 @@
 				map: app.map,
 			    scalebarUnit:'english'
           	});
-			
+
 			showLAS3Wells();
             //parseURL(); //not currently used (20140806), zooms to feature passed through URL.
 		});
-		
+
 		// Dynamic renderer layer:
 		app.rendererDataUrl = "http://services.kgs.ku.edu/arcgis/rest/services/oilgas/oilgas_fields/MapServer/1";
-		
+
 		xSectionPointGraphics = new esri.layers.GraphicsLayer();
 		xSectionLineGraphics = new esri.layers.GraphicsLayer();
 		eligibleWellsGraphics = new esri.layers.GraphicsLayer();
@@ -183,7 +183,7 @@
 
 		fieldsLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/oilgas/oilgas_fields/MapServer", { visible:false });
 		fieldsLayer.setVisibleLayers([0]);
-		
+
 		fieldsFilterRenderLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/oilgas/oilgas_fields/MapServer", { id:"og_fields", opacity:1.0, visible:false });
 		fieldsFilterRenderLayer.setVisibleLayers([1]);
 
@@ -203,8 +203,8 @@
 		wwc5Layer.setVisibleLayers([8]);
 
 		superTypesLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/CO2/general/MapServer", { visible:true });
-		superTypesLayer.setVisibleLayers([10]);	
-		
+		superTypesLayer.setVisibleLayers([10]);
+
 		hrzWellsLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/CO2/general/MapServer", { visible:false });
 		hrzWellsLayer.setVisibleLayers([11]);
 
@@ -221,25 +221,25 @@
 		naipLayer = new esri.layers.ArcGISImageServiceLayer("http://services.kansasgis.org/arcgis/rest/services/IMAGERY_STATEWIDE/2014_NAIP_1m_Color/ImageServer", { visible:false, imageServiceParameters:imageServiceParameters });
 
 		nedLayer = new esri.layers.ArcGISImageServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/Elevation/National_Elevation_Dataset/ImageServer", { visible:false, imageServiceParameters:imageServiceParameters });
-		
+
 		modelAreasLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/CO2/results/MapServer", { visible:true });
 		modelAreasLayer.setVisibleLayers([2]);
-		
+
 		p10Layer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/CO2/results/MapServer", { visible:false });
 		p10Layer.setVisibleLayers([0]);
-		
+
 		p90Layer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/CO2/results/MapServer", { visible:false });
 		p90Layer.setVisibleLayers([1]);
-		
+
 		typeWellsLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/CO2/general/MapServer", { visible:true });
 		typeWellsLayer.setVisibleLayers([12]);
-		
-		earthquakesLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/CO2/seismic/MapServer", { visible:false });
+
+		earthquakesLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/CO2/seismic_1/MapServer", { visible:false });
 		earthquakesLayer.setVisibleLayers([8]);
-        
+
         class1WellsLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/CO2/class_1_2_wells/MapServer", { visible:false });
 		class1WellsLayer.setVisibleLayers([0]);
-        
+
         class2WellsLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/CO2/class_1_2_wells/MapServer", { visible:false });
 		class2WellsLayer.setVisibleLayers([1]);
 
@@ -266,8 +266,8 @@
 		app.map.addLayer(earthquakesLayer);
         app.map.addLayer(class1WellsLayer);
         app.map.addLayer(class2WellsLayer);
-        
-        
+
+
 		visibleWellLyr = wellsNoLabelLayer;
 
 		app.map.setExtent(initExtent, true);
@@ -291,9 +291,9 @@
 	    dojo.connect(m2, "onMoveStop", function(mover){
 	      console.debug("Stop moving m2", mover);
 	    });
-		
+
 	}
-    
+
     // this function not used, just keeping code.
     function parseURL() {
         var queryParams = location.search.substr(1);
@@ -301,12 +301,12 @@
         if (pairs.length > 1) {
             var extType = pairs[0].substring(11);
             var extValue = pairs[1].substring(12);
-            
+
             var findTask = new esri.tasks.FindTask("http://services.kgs.ku.edu/arcgis/rest/services/CO2/general/MapServer");
 			var findParams = new esri.tasks.FindParameters();
 			findParams.returnGeometry = true;
 			findParams.contains = false;
-            
+
             switch (extType) {
                 case "well":
                     findParams.layerIds = [0];
@@ -327,7 +327,7 @@
 					findParams.searchFields = ["s_r_t"];
                     break;
             }
-            
+
             lastLocType = extType;
 			lastLocValue = extValue;
             findParams.searchText = extValue;
@@ -415,7 +415,7 @@
 			dojo.byId('plss_txt').style.color = '##999999';
 			dojo.byId('vis_msg').innerHTML = '* Zoom in to view layer';
 		}
-		
+
 		if (lod >= 12) {
 			dojo.byId('ogwells_txt').innerHTML = 'All Oil & Gas Wells';
 			dojo.byId('ogwells_txt').style.color = '##000000';
@@ -444,7 +444,7 @@
 
 	function executeIdTask(evt) {
 		identify = new esri.tasks.IdentifyTask("http://services.kgs.ku.edu/arcgis/rest/services/CO2/general/MapServer");
-		
+
 		identifyParams = new esri.tasks.IdentifyParameters();
 		identifyParams.tolerance = 4;
         identifyParams.returnGeometry = true;
@@ -471,12 +471,12 @@
 			identifyParams.layerDefinitions = [];
 			identifyParams.layerDefinitions[lyrID] = "";
 		}
-		
+
 		if (fieldFilt == 'on') {
 			identifyParams.layerDefinitions = [];
 			identifyParams.layerDefinitions[1] = "field_kid in (select field_kid from nomenclature.fields_reservoirs where upper(formation_name) in " + formationList + ")";
 		}
-		
+
 		identifyParams.layerIds = [13,0,8,1];
 
 		identify.execute(identifyParams, function(fset) {
@@ -864,8 +864,8 @@
 				break;
 		}
 	}
-    
-    
+
+
     function changeMap(layer, chkObj, legend, title) {
 		if (layer == "wells") {
 			switch (visibleWellLyr) {
@@ -886,7 +886,7 @@
 					break;
 			}
 		}
-		
+
 		if (layer == fieldsLayer) {
 			if (fieldFilt == 'on') {
 				layer = fieldsFilterRenderLayer;
@@ -895,7 +895,7 @@
 
 		if (chkObj.checked) {
 			layer.show();
-			
+
 			if (title != 'none') {
 				var strAdd = '<BR><B>' + title + '</B><BR><IMG src="http://maps.kgs.ku.edu/mk_test/co2/images/' + legend + '.jpg" />' + dojo.byId("mainlegenddiv").innerHTML;
 				dojo.byId("mainlegenddiv").innerHTML = strAdd;
@@ -903,7 +903,7 @@
 		}
 		else {
 			layer.hide();
-			
+
 			if (title != 'none') {
 				var inHTML = dojo.byId('mainlegenddiv').innerHTML.toUpperCase();
 				var lg = legend.toUpperCase();
@@ -917,16 +917,16 @@
 
 	function loadNChangeMap(layer, chkObj, srvc, lyrID, legend, title) {
         var lID = lyrID.split(",");
-        
+
         var isLoaded = loadedLyrs.search(layer);
-        
+
         if (isLoaded < 0) {   //first time layer has been called upon.
             loadedLyrs += layer;
-            
+
             layer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/CO2/" + srvc + "/MapServer", { visible:false, id:layer });
             layer.setVisibleLayers(lID);
             app.map.addLayer(layer);
-            
+
             layer.show();
             addLegend(title,legend);
         } else {
@@ -938,7 +938,7 @@
             }
             else {
                 lyrObj.hide();
-                
+
                 // Remove legend:
                 if (title != 'none') {
                     var inHTML = dojo.byId('mainlegenddiv').innerHTML.toUpperCase();
@@ -948,21 +948,21 @@
                     dojo.byId('mainlegenddiv').innerHTML = inHTML.replace(strRemove,"");
                 }
             }
-        }   
+        }
 	}
-    
-    
+
+
     function addLegend(title, legend) {
         if (title != 'none') {
             var strAdd = '<BR><B>' + title + '</B><BR><IMG src="http://maps.kgs.ku.edu/mk_test/co2/images/' + legend + '.jpg" />' + dojo.byId("mainlegenddiv").innerHTML;
             dojo.byId("mainlegenddiv").innerHTML = strAdd;
-        }   
+        }
     }
 
 
 	function changeOpacity(layers, opa) {
         var l = layers;
-        
+
         if (typeof layers == "string") {
             l = app.map.getLayer(layers);
         }
@@ -1081,7 +1081,7 @@
 
 
 	function filterWells(method) {
-		
+
 		var layerDef = [];
 		var mExt = app.map.extent;
 
@@ -1105,13 +1105,13 @@
 				dojo.byId('filter_on').style.display = "none";
 				filter = "off";
 				break;
-				
+
 			case 'typewells_off':
 				layerDef[lyrID] = "";
 				visibleWellLyr.setLayerDefinitions(layerDef);
 				dojo.byId('filter_on').style.display = "none";
 				filter = "off";
-				
+
 				showLAS3Wells();
 				break;
 
@@ -1400,34 +1400,34 @@
 		if (currentKID != null) {
 			if (dojo.byId('shelig').innerHTML == 'Hide') {
 				xSectionKIDS.push(currentKID);
-			
+
 				// Update number selected text:
 				//dojo.byId('numselected').innerHTML = xSectionKIDS.length;
 				updateNumSelected();
-		
+
 				// Return geometery for highlighting:
 				var qTask = new esri.tasks.QueryTask("http://services.kgs.ku.edu/arcgis/rest/services/CO2/general/MapServer/0");
-		
+
 				var query = new esri.tasks.Query;
 				query.returnGeometry = true;
 				query.where = "KID = " + currentKID;
-		
+
 				qTask.execute(query, function(fset) {
 					app.map.graphics.clear();
-		
+
 					var sym = new esri.symbol.SimpleMarkerSymbol();
 					sym.setOutline(new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color([0,230,250]), 3));
 					sym.size = 20;
 					fset.features[0].setSymbol(sym);
-		
+
 					xSectionPointGraphics.add(fset.features[0]);
-		
+
 					// Store X,Y values for drawing line:
 					xSectionXs.push(fset.features[0].geometry.x);
 					xSectionYs.push(fset.features[0].geometry.y);
-		
+
 					currentKID = null;
-		
+
 					drawXSectionLine();
 				});
 			} else {
@@ -1528,7 +1528,7 @@
 	function updateNumSelected()
 	{
 		dojo.byId('numselected').innerHTML = xSectionKIDS.length;
-		
+
 		if (xSectionKIDS.length == 4) {
 			dojo.byId('addwellbtn').disabled = true;
 		} else {
@@ -1553,13 +1553,13 @@
 		}
 	}
 
-	
+
 	function filterFields(horizon, attr) {
 		app.map.graphics.clear();
 		dijit.byId('fieldsdialog').hide();
-		
+
 		var lyrDef = [];
-		
+
 		switch (horizon) {
 			case 'cretaceous':
 				formationList = "('NIOBRARA')";
@@ -1584,7 +1584,7 @@
 				formationList = "('MORROWAN','LOWER MORROW','PENNSYLVANIAN MORROWAN SANDSTONE','LOWER MORROW (KEYES)','KEARNY FORMATION (PURDY SANDSTONE)','MORROW','UPPER MORROW SANDSTONE','KEYES SANDSTONE','MORROWAN SANDSTONE')";
 				break;
 			case 'missdevonian':
-				formationList = "('CHESTERAN','CHESTERAN LIMESTONE','MISSISSIPPIAN','MISSISSIPPIAN (SPERGEN DOLOMITE)','MISSISSIPPIAN (ST. LOUIS)','MISSISSIPPIAN - MERAMEC','MISSISSIPPIAN - St. LOUIS','MISSISSIPPIAN CHERT (Chat" + "\"" + ")" + "\"" + "','MISSISSIPPIAN CHESTER SANDSTONE','MISSISSIPPIAN CHESTER SERIES',";		
+				formationList = "('CHESTERAN','CHESTERAN LIMESTONE','MISSISSIPPIAN','MISSISSIPPIAN (SPERGEN DOLOMITE)','MISSISSIPPIAN (ST. LOUIS)','MISSISSIPPIAN - MERAMEC','MISSISSIPPIAN - St. LOUIS','MISSISSIPPIAN CHERT (Chat" + "\"" + ")" + "\"" + "','MISSISSIPPIAN CHESTER SANDSTONE','MISSISSIPPIAN CHESTER SERIES',";
 				formationList += "'MISSISSIPPIAN LIMESTONE','MISSISSIPPIAN MERAMECIAN (ST. LOUIS)','MISSISSIPPIAN OSAGE','MISSISSIPPIAN SPERGEN DOLOMITE (C ZONE)','MISSISSIPPIAN ST. LOUIS FORMATION','OSAGIAN','PENN.-MISS.','SPERGEN','ST. LOUIS','WARSAW','MISSISSIPPIAN STE. GENEVIEVE LIMESTONE','ST. GENEVIEVE',";
 				formationList += "'KINDERHOOKIAN','KINDERHOOK','MISENER','HUNTON')";
 				break;
@@ -1595,13 +1595,13 @@
 				formationList = "('SIMPSON','SIMPSON SAND (ST. PETER)','ARBUCKLE','ORDOVICIAN','REAGAN','GRANITE WASH','CAMBRIAN','SIMPSON SAND (ST. PETER)')";
 				break;
 		}
-		
+
 		if (horizon == 'all') {
 			clearFieldFilter();
 		} else {
 			lyrDef[1] = "field_kid in (select field_kid from nomenclature.fields_reservoirs where upper(formation_name) in " + formationList + ")";
 		}
-		
+
 		fieldsFilterRenderLayer.setLayerDefinitions(lyrDef);
 		dojo.byId('field_filter_on').style.display = "block";
 		dojo.byId('field_filter_msg').innerHTML = "Field filter/classification is on ";
@@ -1609,39 +1609,39 @@
 		dojo.byId('fields').checked = 'checked';
 		fieldsLayer.hide();
 		fieldsFilterRenderLayer.show();
-		
+
 		classBreaks(attr,formationList, horizon);
-		
+
 		showStaticLegend(horizon,attr);
 	}
-	
+
 	function clearFieldFilter() {
 		dijit.byId('fieldsdialog').hide();
-		
+
 		var lyrDef = [];
-		
+
 		lyrDef[1] = "";
 		fieldsFilterRenderLayer.setLayerDefinitions(lyrDef);
 		dojo.byId('field_filter_on').style.display = "none";
-		
+
 		fieldFilt = 'off';
-		
+
 		fieldsLayer.show();
 		fieldsFilterRenderLayer.hide();
-		
+
 		dojo.byId('dynamiclegenddiv').innerHTML = '';
 	}
-	
-	
+
+
 	function classBreaks(attr,formationList,horizon) {
 		var depthElevAttr = '';
-		
+
 		switch (attr) {
 			case 'AVGDEPTH':
 				// blue 2:
 				var c1 = "##BEE8FF";
 				var c2 = "##08519C";
-				
+
 				switch (horizon) {
 					case 'cretaceous':
 						depthElevAttr = 'cret_dpth';
@@ -1681,7 +1681,7 @@
 				// purple:
 				var c1 = "##54278F";
 				var c2 = "##F2F0F7";
-				
+
 				switch (horizon) {
 					case 'cretaceous':
 						depthElevAttr = 'cret_elev';
@@ -1741,7 +1741,7 @@
 				/*var c1 = "##EFF3FF";
 				var c2 = "##08519C";*/
 		}
-		
+
         var classDef = new esri.tasks.ClassBreaksDefinition();
 		if (depthElevAttr == '') {
 			depthElevAttr = attr;
@@ -1754,7 +1754,7 @@
         colorRamp.fromColor = new dojo.colorFromHex(c1);
         colorRamp.toColor = new dojo.colorFromHex(c2);
         colorRamp.algorithm = "hsv";
-        
+
 		classDef.baseSymbol = new esri.symbol.SimpleFillSymbol("solid", new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color([0,0,0]), 1), null);
         classDef.colorRamp = colorRamp;
 
@@ -1763,25 +1763,25 @@
 		if (formationList != '') {
 			params.where = "field_kid in (select field_kid from nomenclature.fields_reservoirs where upper(formation_name) in " + formationList + ")";
 		}
-		
+
         var generateRenderer = new esri.tasks.GenerateRendererTask(app.rendererDataUrl);
 		generateRenderer.execute(params, applyRenderer, rendererError);
       }
-	
-	
+
+
 	function applyRenderer(renderer) {
         var optionsArray = [];
         var drawingOptions = new esri.layers.LayerDrawingOptions();
-        drawingOptions.renderer = renderer; 
+        drawingOptions.renderer = renderer;
         optionsArray[1] = drawingOptions;
         app.map.getLayer("og_fields").setLayerDrawingOptions(optionsArray);
-		
+
         /*if ( ! app.hasOwnProperty("legend") ) {
           createLegend();
         }*/
       }
-	  
-	  
+
+
 	function createLegend() {
         app.legend = new esri.dijit.Legend({
           map : app.map,
@@ -1795,16 +1795,16 @@
         }, dojo.byId("dynamiclegenddiv"));
         app.legend.startup();
       }
-	
-	
+
+
 	function rendererError(err) {
         console.log("error: ", dojo.toJson(err));
       }
-	  
-	  
+
+
 	function showStaticLegend(horizon,attr) {
 		var title, subTitle;
-		
+
 		switch (attr) {
 			case 'CUMM_OIL':
 				subTitle = '<br />Cumulative Oil Production (bbl)';
@@ -1815,8 +1815,8 @@
 			case 'AVGDEPTH':
 				subTitle = '<br />Average Depth (ft)';
 				break;
-		}				
-				
+		}
+
 		switch (horizon) {
 			case 'all':
 				title = subTitle;
@@ -1847,14 +1847,14 @@
 				break;
 			case 'lowerord':
 				title = '<b>Lower Ordovivian & Cambrian Fields</b>' + subTitle;
-				break;	
+				break;
 		}
-		
+
 		var legendHTML = title + '<br />';
 		legendHTML += '<img src="images/field_legends/' + horizon + '_' + attr + '.png" />';
 		dojo.byId('dynamiclegenddiv').innerHTML = legendHTML;
 	}
-	
+
 
 	function showLAS3Wells() {
 		var layerDef = [];
@@ -1880,7 +1880,7 @@
 			layerDef[lyrID] = "";
 			visibleWellLyr.setLayerDefinitions(layerDef);
 			dojo.byId('filter_on').style.display = "none";
-			
+
 			switch (visibleWellLyr) {
 				case wellsNoLabelLayer:
 					layer = wellsNoLabelLayer;
@@ -1900,7 +1900,7 @@
 			}
 			layer.show();
 			typeWellsLayer.hide();
-		}				
+		}
 		else {
 			dojo.byId('typewells').checked = 'checked';
 
@@ -1910,12 +1910,12 @@
 			dojo.byId('shelig').innerHTML = 'Hide';
 			filter = "las3";
 			dojo.byId('filter_msg').innerHTML = "Only showing Type Wells ";
-			
+
 			typeWellsLayer.show();
 		}
 	}
-	
-	
+
+
 	function printPDF() {
 		var printUrl = 'http://services.kgs.ku.edu/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task';
 		var printTask = new esri.tasks.PrintTask(printUrl);
@@ -1923,28 +1923,28 @@
         var template = new esri.tasks.PrintTemplate();
 		var w, h;
 		var printOutSr = new esri.SpatialReference({ wkid:26914 });
-		
+
 		/*if (dojo.byId('plss').checked) {
 			plssLayer.hide();
 			app.map.addLayer(plssDynLayer);
 			plssDynLayer.show();
 		}*/
-		
+
 		title = dojo.byId("pdftitle2").value;
-		
+
 		if (dojo.byId('portrait2').checked) {
 			var layout = "Letter ANSI A Portrait";
 		} else {
 			var layout = "Letter ANSI A Landscape";
 		}
-		
+
 		dijit.byId('printdialog2').hide();
 		dojo.byId('printing_div').style.display = "block";
-		
+
 		if (dojo.byId('maponly').checked) {
 			layout = 'MAP_ONLY';
 			format = 'JPG';
-			
+
 			if (dojo.byId('portrait2').checked) {
 				w = 600;
 				h = 960;
@@ -1952,16 +1952,16 @@
 				w = 960;
 				h = 600;
 			}
-			
+
 			template.exportOptions = {
   				width: w,
   				height: h,
   				dpi: 96
-			};	
+			};
 		} else {
 			format = 'PDF';
 		}
-		
+
         template.layout = layout;
 		template.format = format;
         template.preserveScale = true;
@@ -1980,31 +1980,31 @@
 
         printTask.execute(printParams, printResult, printError);
 	}
-	
+
 	function printResult(result){
 		dojo.byId('printing_div').style.display = "none";
 		window.open(result.url);
-		
+
 		/*if (dojo.byId('plss').checked) {
 			plssDynLayer.hide();
 			app.map.removeLayer(plssDynLayer);
 			plssLayer.show();
 		}*/
     }
-	
+
     function printError(result){
         console.log(result);
     }
-    
+
     function filterQuakes(year, mag) {
         var nextYear = parseInt(year) + 1;
         var def = [];
-        
+
         if (year !== "all") {
             if (mag !== "all") {
                 def[8] = "the_date >= to_date('" + year + "-01-01 00:00:00','YYYY-MM-DD HH24:MI:SS') and the_date < to_date('" + nextYear + "-01-01 00:00:00','YYYY-MM-DD HH24:MI:SS') and mag >=" + mag;
             } else {
-                def[8] = "the_date >= to_date('" + year + "-01-01 00:00:00','YYYY-MM-DD HH24:MI:SS') and the_date < to_date('" + nextYear + "-01-01 00:00:00','YYYY-MM-DD HH24:MI:SS')";   
+                def[8] = "the_date >= to_date('" + year + "-01-01 00:00:00','YYYY-MM-DD HH24:MI:SS') and the_date < to_date('" + nextYear + "-01-01 00:00:00','YYYY-MM-DD HH24:MI:SS')";
             }
         } else {
             if (mag !== "all") {
@@ -2013,13 +2013,13 @@
                 def[8] = "";
             }
         }
-        
-        earthquakesLayer.setLayerDefinitions(def);   
+
+        earthquakesLayer.setLayerDefinitions(def);
     }
-    
+
     function filterQuakesDays(days) {
         var def = [];
-        
+
         if (days !== "all") {
             def[8] = "sysdate - the_date <= " + days;
         } else {
@@ -2030,10 +2030,10 @@
 
     function filterQuakesRecent() {
     	var def = [];
-    	def[8] = "state = 'KS' and the_date = (select max(the_date) from earthquakes where state = 'KS')";
+    	def[8] = "state = 'KS' and lower(net) <> 'ismpkansas' and the_date = (select max(the_date) from earthquakes where state = 'KS' and lower(net) <> 'ismpkansas')";
     	earthquakesLayer.setLayerDefinitions(def);
     }
-    
+
     function clearQuakeFilter() {
         var def = [];
         def = "";
@@ -2107,23 +2107,23 @@
                     <td><input type="checkbox" id="wells" onClick="changeMap('wells',this,'blank','none');" checked><span id="ogwells_txt"></span></td>
                     <td></td>
                 </tr>
-                
+
                 <tr>
                     <td colspan="2"><input type="checkbox" id="class1wells" onClick="changeMap(class1WellsLayer,this,'red_tri','Class I Wells');">Class I Injection Wells</td>
                 </tr>
                 <tr>
                     <td colspan="2"><input type="checkbox" id="class2wells" onClick="changeMap(class2WellsLayer,this,'blue_tri','Class II Wells');">Class II Injection Wells</td>
                 </tr>
-                    
+
                 <tr><td><hr /></td></tr>
                 <tr>
                     <td colspan="2"><input type="checkbox" id="earthquakes" onClick="changeMap(earthquakesLayer,this,'earthquakes','Earthquakes');">Earthquakes 2.0+ &nbsp;&nbsp; <span style="text-decoration:underline;cursor:pointer;font-size:12px;" onclick="dijit.byId('quakefilter').show();">Filter</span>&nbsp;&nbsp;&nbsp;<span style="text-decoration:underline;cursor:pointer;font-size:12px;" onclick="dijit.byId('quakenotes').show();">Read Me</span></td>
                 </tr>
-                
+
                 <tr>
                     <td colspan="2"><input type="checkbox" id="hrzwells" onClick="changeMap(hrzWellsLayer,this,'blank','none');">Horizontal Wells since 2010&nbsp;&nbsp;<img src="images/black_square.jpg" style="vertical-align:middle"></td>
                 </tr>
-    
+
                 <tr>
                     <td nowrap="nowrap"><input type="checkbox" id="wwc5" onClick="changeMap(wwc5Layer,this,'blank','none');"><span id="wwc5_txt"></span></td>
                     <td></td>
@@ -2176,7 +2176,7 @@
                         </div>
                     </td>
                 </tr>
-                
+
                 <tr>
                     <td><input type="checkbox" id="base" onClick="changeMap(baseLayer,this,'blank','none');" checked>Base map</td>
                     <td>
@@ -2190,7 +2190,7 @@
                 <tr><td class="note" id="vis_msg" colspan="2">* Layer not visible at all scales</td></tr>
 
 				<tr><td><hr /></td></tr>
-                
+
                 <tr>
                 	<td><input type="checkbox" id="p10" onClick="changeMap(p10Layer,this,'p10_legend','CO2 P10 Storage Est. (tons/100 sq km)');">P10 Storage Est.</td>
                     <td>
@@ -2200,7 +2200,7 @@
                         </div>
                     </td>
                 </tr>
-                
+
                 <tr>
                 	<td><input type="checkbox" id="p90" onClick="changeMap(p90Layer,this,'p90_legend','CO2 P90 Storage Est. (tons/100 sq km)');">P90 Storage Est.</td>
                     <td>
@@ -2210,7 +2210,7 @@
                         </div>
                     </td>
                 </tr>
-                
+
                 <!-- old layer picker: -->
 				<!--<tr><td><span style="font:normal normal bold 11px arial;text-decoration:underline;cursor:pointer;" onclick="javascript:animateDiv('open');">Geologic Base Layers</span></td></tr>-->
 
@@ -2585,7 +2585,7 @@
                 <input type="checkbox" id="cedarhillsiso" onclick="loadNChangeMap('cedarHillsIsoLayer',this,'regional_geology_part2','14','cedarhills_iso','Cedar Hills Isopach (ft)');">Cedar Hills Isopach<br>
                 <input type="checkbox" id="stonecorraltop" onclick="loadNChangeMap('stoneCorralTopLayer',this,'regional_geology_part3','15,16','stonecorl_top','Stone Corral Top Elevation (ft)');">Stone Corral Top<br>
                 <input type="checkbox" id="stonecorrallansiso" onclick="loadNChangeMap('stoneCorralLansingIsoLayer',this,'regional_geology_part3','17,18','stonecorl_lans_iso','Stone Corral to Lansing Isopach (ft)');">Stone Corral to Lansing Isopach<br>
-                <input type="checkbox" id="stonecorralmissiso" onclick="loadNChangeMap('stoneCorralMissIsoLayer',this,'regional_geology_part3','13,14','stonecorral_miss_iso','Stone Corral to Miss. Isopach (ft)');">Stone Corral to Miss. Isopach<br>  
+                <input type="checkbox" id="stonecorralmissiso" onclick="loadNChangeMap('stoneCorralMissIsoLayer',this,'regional_geology_part3','13,14','stonecorral_miss_iso','Stone Corral to Miss. Isopach (ft)');">Stone Corral to Miss. Isopach<br>
                 <input type="checkbox" id="cimmsaltiso" onclick="loadNChangeMap('cimmSaltIsoLayer',this,'regional_geology_part2','15','cimmsalt_legend','Cimarron Salt Isopach (ft)');">Cimarron Salt Isopach<br>
                 <input type="checkbox" id="hutchtop" onclick="loadNChangeMap('hutchTopLayer',this,'regional_geology_part2','9,31','hutchsalt_top','Hutchinson Salt Top Elevation (ft)');">Hutchinson Salt Top<br>
                 <input type="checkbox" id="hutchchaseiso" onclick="loadNChangeMap('hutchChaseIsoLayer',this,'regional_geology_part2','10,32','hutch_chase_iso','Hutchinson Salt to Chase Isopach (ft)');">Hutchinson Salt to Chase Isopach<br>
@@ -2614,9 +2614,9 @@
                 <input type="checkbox" id="kdhksubsea" onclick="loadNChangeMap('kdhkSubseaLayer',this,'regional_geology','16,27','kdhksubsea','Kinderhook Top Elevation (ft)');">Kinderhook Top<br>
                 <input type="checkbox" id="kdhkiso" onclick="loadNChangeMap('kdhkIsoLayer',this,'regional_geology_part2','24','kdhkiso','Kinderhook Isopach (ft)');">Kinderhook Isopach<br>
                 <input type="checkbox" id="kdhksubseawellington" onclick="loadNChangeMap('kdhkWellingtonLayer',this,'regional_geology','17','kdhksubseawellington','Kinderhook Top Elevation (Wellington area, ft)');">Kinderhook Top (Wellington Area)<br>
-                <input type="checkbox" id="isochattmiss" onclick="loadNChangeMap('chattMissBaseLayer',this,'regional_geology','9','chattmissiso','Chattanooga Isopach (ft)');">Chattanooga Isopach<br>  
+                <input type="checkbox" id="isochattmiss" onclick="loadNChangeMap('chattMissBaseLayer',this,'regional_geology','9','chattmissiso','Chattanooga Isopach (ft)');">Chattanooga Isopach<br>
                 <input type="checkbox" id="huntontop" onclick="loadNChangeMap('huntonTopLayer',this,'regional_geology_part2','22,23','huntontop','Hunton Elevation (ft)');">Hunton Top<br>
-                <input type="checkbox" id="huntoniso" onclick="loadNChangeMap('huntonIsoLayer',this,'regional_geology_part2','21','huntoniso','Hunton Isopach (ft)');">Hunton Isopach<br> 
+                <input type="checkbox" id="huntoniso" onclick="loadNChangeMap('huntonIsoLayer',this,'regional_geology_part2','21','huntoniso','Hunton Isopach (ft)');">Hunton Isopach<br>
                 <input type="checkbox" id="violatop" onclick="loadNChangeMap('violaTopLayer',this,'regional_geology_part2','28,29','violatop','Viola Elevation (ft)');">Viola Top<br>
                 <input type="checkbox" id="violaiso" onclick="loadNChangeMap('violaIsoLayer',this,'regional_geology','28','violaiso','Viola Isopach (ft)');">Viola Isopach<br>
                 <input type="checkbox" id="simpsontop" onclick="loadNChangeMap('simpsonTopLayer',this,'regional_geology_part2','26,27','simpsontop','Simpson Elevation (ft)');">Simpson Top<br>
@@ -2631,100 +2631,100 @@
 				<input type="checkbox" id="precambdepth" onclick="loadNChangeMap('precambDepthLayer',this,'regional_geology','2,19','pcdepth','Precambrian Depth (ft)');">Precambrian Depth<br>
             <td style="text-align:left;width:33%" nowrap>
                 <span style="font:normal normal normal 14px arial">Anson-Bates-Wellington Area</span><br>
-                <input type="checkbox" id="abwseismic2" style="margin-left:11px;" onclick="loadNChangeMap('abwSeismicLayer',this,'seismic','0','abwseismic','Arbuckle Time Structure, A-B-W');">Arbuckle Time Structure
+                <input type="checkbox" id="abwseismic2" style="margin-left:11px;" onclick="loadNChangeMap('abwSeismicLayer',this,'seismic_1','0','abwseismic','Arbuckle Time Structure, A-B-W');">Arbuckle Time Structure
                 <div id="horizontalSlider_abwseismic2" dojoType="dijit.form.HorizontalSlider" value="0" minimum="0" maximum="10" discreteValues="11"
                     intermediateChanges="true" style="width:75px;float:right;margin-right:5px;"
                     onChange="dojo.byId('horizontalSlider_abwseismic2').value = arguments[0];changeOpacity('abwSeismicLayer',dojo.byId('horizontalSlider_abwseismic2').value);">
                 </div><br>
                 <p></p>
                 <span style="font:normal normal normal 14px arial">Adamson Area</span><br>
-                <input type="checkbox" id="adamsonheebtime" style="margin-left:11px;" onclick="loadNChangeMap('adamsonHeebTimeLayer',this,'seismic','2','adamson_heeb_ts','Adamson Heebner Time Structure');">Heebner Time Structure
+                <input type="checkbox" id="adamsonheebtime" style="margin-left:11px;" onclick="loadNChangeMap('adamsonHeebTimeLayer',this,'seismic_1','2','adamson_heeb_ts','Adamson Heebner Time Structure');">Heebner Time Structure
                 <div id="horizontalSlider_adamsonheebtime" dojoType="dijit.form.HorizontalSlider" value="0" minimum="0" maximum="10" discreteValues="11"
                     intermediateChanges="true" style="width:75px;float:right;margin-right:5px;"
                     onChange="dojo.byId('horizontalSlider_adamsonheebtime').value = arguments[0];changeOpacity('adamsonHeebTimeLayer',dojo.byId('horizontalSlider_adamsonheebtime').value);">
                 </div>
                 <br>
-                <input type="checkbox" id="adamsonmrrwdepth" style="margin-left:11px;" onclick="loadNChangeMap('adamsonMrrwDepthLayer',this,'seismic','6','adamson_mrrw_dc','Adamson Morrow Depth');">Morrow Depth Converted
+                <input type="checkbox" id="adamsonmrrwdepth" style="margin-left:11px;" onclick="loadNChangeMap('adamsonMrrwDepthLayer',this,'seismic_1','6','adamson_mrrw_dc','Adamson Morrow Depth');">Morrow Depth Converted
                 <div id="horizontalSlider_adamsonmrrwdepth" dojoType="dijit.form.HorizontalSlider" value="0" minimum="0" maximum="10" discreteValues="11"
                     intermediateChanges="true" style="width:75px;float:right;margin-right:5px;"
                     onChange="dojo.byId('horizontalSlider_adamsonmrrwdepth').value = arguments[0];changeOpacity('adamsonMrrwDepthLayer',dojo.byId('horizontalSlider_adamsonmrrwdepth').value);">
                 </div>
                 <br>
-                <input type="checkbox" id="adamsonmrrwtime" style="margin-left:11px;" onclick="loadNChangeMap('adamsonMrrwTimeLayer',this,'seismic','5','adamson_mrrw_ts','Adamson Morrow Time');">Morrow Time Structure
+                <input type="checkbox" id="adamsonmrrwtime" style="margin-left:11px;" onclick="loadNChangeMap('adamsonMrrwTimeLayer',this,'seismic_1','5','adamson_mrrw_ts','Adamson Morrow Time');">Morrow Time Structure
                 <div id="horizontalSlider_adamsonmrrwtime" dojoType="dijit.form.HorizontalSlider" value="0" minimum="0" maximum="10" discreteValues="11"
                     intermediateChanges="true" style="width:75px;float:right;margin-right:5px;"
                     onChange="dojo.byId('horizontalSlider_adamsonmrrwtime').value = arguments[0];changeOpacity('adamsonMrrwTimeLayer',dojo.byId('horizontalSlider_adamsonmrrwtime').value);">
                 </div>
                 <br>
-                <input type="checkbox" id="adamsonmrmcdepth" style="margin-left:11px;" onclick="loadNChangeMap('adamsonMrmcDepthLayer',this,'seismic','3','adamson_mrmc_dc','Adamson Meramec Depth');">Meramec Depth Converted
+                <input type="checkbox" id="adamsonmrmcdepth" style="margin-left:11px;" onclick="loadNChangeMap('adamsonMrmcDepthLayer',this,'seismic_1','3','adamson_mrmc_dc','Adamson Meramec Depth');">Meramec Depth Converted
                 <div id="horizontalSlider_adamsonmrmcdepth" dojoType="dijit.form.HorizontalSlider" value="0" minimum="0" maximum="10" discreteValues="11"
                     intermediateChanges="true" style="width:75px;float:right;margin-right:5px;"
                     onChange="dojo.byId('horizontalSlider_adamsonmrmcdepth').value = arguments[0];changeOpacity('adamsonMrmcDepthLayer',dojo.byId('horizontalSlider_adamsonmrmcdepth').value);">
                 </div>
                 <br>
-                <input type="checkbox" id="adamsonmrmctime" style="margin-left:11px;" onclick="loadNChangeMap('adamsonMrmcTimeLayer',this,'seismic','4','adamson_mrmc_ts','Adamson Meramec Time');">Meramec Time Structure
+                <input type="checkbox" id="adamsonmrmctime" style="margin-left:11px;" onclick="loadNChangeMap('adamsonMrmcTimeLayer',this,'seismic_1','4','adamson_mrmc_ts','Adamson Meramec Time');">Meramec Time Structure
                 <div id="horizontalSlider_adamsonmrmctime" dojoType="dijit.form.HorizontalSlider" value="0" minimum="0" maximum="10" discreteValues="11"
                     intermediateChanges="true" style="width:75px;float:right;margin-right:5px;"
                     onChange="dojo.byId('horizontalSlider_adamsonmrmctime').value = arguments[0];changeOpacity('adamsonMrmcTimeLayer',dojo.byId('horizontalSlider_adamsonmrmctime').value);">
                 </div>
                 <br>
-                <input type="checkbox" id="adamsonarbktime" style="margin-left:11px;" onclick="loadNChangeMap('adamsonArbkTimeLayer',this,'seismic','1','adamson_arbk_ts','Adamson Arbuckle Time Structure');">Arbuckle Time Structure
+                <input type="checkbox" id="adamsonarbktime" style="margin-left:11px;" onclick="loadNChangeMap('adamsonArbkTimeLayer',this,'seismic_1','1','adamson_arbk_ts','Adamson Arbuckle Time Structure');">Arbuckle Time Structure
                 <div id="horizontalSlider_adamsonarbktime" dojoType="dijit.form.HorizontalSlider" value="0" minimum="0" maximum="10" discreteValues="11"
                     intermediateChanges="true" style="width:75px;float:right;margin-right:5px;"
                     onChange="dojo.byId('horizontalSlider_adamsonarbktime').value = arguments[0];changeOpacity('adamsonArbkTimeLayer',dojo.byId('horizontalSlider_adamsonarbktime').value);">
                 </div>
                 <br>
-                <input type="checkbox" id="adamsonpctime" style="margin-left:11px;" onclick="loadNChangeMap('adamsonPcTimeLayer',this,'seismic','9','adamson_pc_ts','Adamson Precambrian Time');">Precambrian Time Structure
+                <input type="checkbox" id="adamsonpctime" style="margin-left:11px;" onclick="loadNChangeMap('adamsonPcTimeLayer',this,'seismic_1','9','adamson_pc_ts','Adamson Precambrian Time');">Precambrian Time Structure
                 <div id="horizontalSlider_adamsonpctime" dojoType="dijit.form.HorizontalSlider" value="0" minimum="0" maximum="10" discreteValues="11"
                     intermediateChanges="true" style="width:75px;float:right;margin-right:5px;"
                     onChange="dojo.byId('horizontalSlider_adamsonpctime').value = arguments[0];changeOpacity('adamsonPcTimeLayer',dojo.byId('horizontalSlider_adamsonpctime').value);">
                 </div>
                 <p></p>
                 <span style="font:normal normal normal 14px arial">Cutter Area</span><br>
-                <input type="checkbox" id="cutterheebtime" style="margin-left:11px;" onclick="loadNChangeMap('cutterHeebTimeLayer',this,'seismic','16','cutter_heeb_ts','Cutter Heebner Time Structure');">Heebner Time Structure
+                <input type="checkbox" id="cutterheebtime" style="margin-left:11px;" onclick="loadNChangeMap('cutterHeebTimeLayer',this,'seismic_1','16','cutter_heeb_ts','Cutter Heebner Time Structure');">Heebner Time Structure
                 <div id="horizontalSlider_cutterheebtime" dojoType="dijit.form.HorizontalSlider" value="0" minimum="0" maximum="10" discreteValues="11"
                     intermediateChanges="true" style="width:75px;float:right;margin-right:5px;"
                     onChange="dojo.byId('horizontalSlider_cutterheebtime').value = arguments[0];changeOpacity('cutterHeebTimeLayer',dojo.byId('horizontalSlider_cutterheebtime').value);">
                 </div>
                 <br>
-                <input type="checkbox" id="cuttermrrwdepth" style="margin-left:11px;" onclick="loadNChangeMap('cutterMrrwDepthLayer',this,'seismic','14','cutter_mrrw_dc','Cutter Morrow Depth');">Morrow Depth Converted
+                <input type="checkbox" id="cuttermrrwdepth" style="margin-left:11px;" onclick="loadNChangeMap('cutterMrrwDepthLayer',this,'seismic_1','14','cutter_mrrw_dc','Cutter Morrow Depth');">Morrow Depth Converted
                 <div id="horizontalSlider_cuttermrrwdepth" dojoType="dijit.form.HorizontalSlider" value="0" minimum="0" maximum="10" discreteValues="11"
                     intermediateChanges="true" style="width:75px;float:right;margin-right:5px;"
                     onChange="dojo.byId('horizontalSlider_cuttermrrwdepth').value = arguments[0];changeOpacity('cutterMrrwDepthLayer',dojo.byId('horizontalSlider_cuttermrrwdepth').value);">
                 </div>
                 <br>
-                <input type="checkbox" id="cuttermrrwtime" style="margin-left:11px;" onclick="loadNChangeMap('cutterMrrwTimeLayer',this,'seismic','13','cutter_mrrw_ts','Cutter Morrow Time Structure');">Morrow Time Structure
+                <input type="checkbox" id="cuttermrrwtime" style="margin-left:11px;" onclick="loadNChangeMap('cutterMrrwTimeLayer',this,'seismic_1','13','cutter_mrrw_ts','Cutter Morrow Time Structure');">Morrow Time Structure
                 <div id="horizontalSlider_cuttermrrwtime" dojoType="dijit.form.HorizontalSlider" value="0" minimum="0" maximum="10" discreteValues="11"
                     intermediateChanges="true" style="width:75px;float:right;margin-right:5px;"
                     onChange="dojo.byId('horizontalSlider_cuttermrrwtime').value = arguments[0];changeOpacity('cutterMrrwTimeLayer',dojo.byId('horizontalSlider_cuttermrrwtime').value);">
                 </div>
                 <br>
-                <input type="checkbox" id="cuttermrmcdepth" style="margin-left:11px;" onclick="loadNChangeMap('cutterMrmcDepthLayer',this,'seismic','12','cutter_mrmc_dc','Cutter Meramec Depth');">Meramec Depth Converted
+                <input type="checkbox" id="cuttermrmcdepth" style="margin-left:11px;" onclick="loadNChangeMap('cutterMrmcDepthLayer',this,'seismic_1','12','cutter_mrmc_dc','Cutter Meramec Depth');">Meramec Depth Converted
                 <div id="horizontalSlider_cuttermrmcdepth" dojoType="dijit.form.HorizontalSlider" value="0" minimum="0" maximum="10" discreteValues="11"
                     intermediateChanges="true" style="width:75px;float:right;margin-right:5px;"
                     onChange="dojo.byId('horizontalSlider_cuttermrmcdepth').value = arguments[0];changeOpacity('cutterMrmcDepthLayer',dojo.byId('horizontalSlider_cuttermrmcdepth').value);">
                 </div>
                 <br>
-                <input type="checkbox" id="cuttermrmctime" style="margin-left:11px;" onclick="loadNChangeMap('cutterMrmcTimeLayer',this,'seismic','11','cutter_mrmc_ts','Cutter Meramec Time Structure');">Meramec Time Structure
+                <input type="checkbox" id="cuttermrmctime" style="margin-left:11px;" onclick="loadNChangeMap('cutterMrmcTimeLayer',this,'seismic_1','11','cutter_mrmc_ts','Cutter Meramec Time Structure');">Meramec Time Structure
                 <div id="horizontalSlider_cuttermrmctime" dojoType="dijit.form.HorizontalSlider" value="0" minimum="0" maximum="10" discreteValues="11"
                     intermediateChanges="true" style="width:75px;float:right;margin-right:5px;"
                     onChange="dojo.byId('horizontalSlider_cuttermrmctime').value = arguments[0];changeOpacity('cutterMrmcTimeLayer',dojo.byId('horizontalSlider_cuttermrmctime').value);">
                 </div>
                 <br>
-                <input type="checkbox" id="cuttervioltime" style="margin-left:11px;" onclick="loadNChangeMap('cutterViolTimeLayer',this,'seismic','15','cutter_vio_ts','Cutter Viola Time Structure');">Viola Time Structure
+                <input type="checkbox" id="cuttervioltime" style="margin-left:11px;" onclick="loadNChangeMap('cutterViolTimeLayer',this,'seismic_1','15','cutter_vio_ts','Cutter Viola Time Structure');">Viola Time Structure
                 <div id="horizontalSlider_cuttervioltime" dojoType="dijit.form.HorizontalSlider" value="0" minimum="0" maximum="10" discreteValues="11"
                     intermediateChanges="true" style="width:75px;float:right;margin-right:5px;"
                     onChange="dojo.byId('horizontalSlider_cuttervioltime').value = arguments[0];changeOpacity('cutterViolTimeLayer',dojo.byId('horizontalSlider_cuttervioltime').value);">
                 </div>
                 <br>
-                <input type="checkbox" id="cutterpctime" style="margin-left:11px;" onclick="loadNChangeMap('cutterPcTimeLayer',this,'seismic','10','cutter_pc_ts','Cutter Precambrian Time Structure');">Precambrian Time Structure
+                <input type="checkbox" id="cutterpctime" style="margin-left:11px;" onclick="loadNChangeMap('cutterPcTimeLayer',this,'seismic_1','10','cutter_pc_ts','Cutter Precambrian Time Structure');">Precambrian Time Structure
                 <div id="horizontalSlider_cutterpctime" dojoType="dijit.form.HorizontalSlider" value="0" minimum="0" maximum="10" discreteValues="11"
                     intermediateChanges="true" style="width:75px;float:right;margin-right:5px;"
                     onChange="dojo.byId('horizontalSlider_cutterpctime').value = arguments[0];changeOpacity('cutterPcTimeLayer',dojo.byId('horizontalSlider_cutterpctime').value);">
                 </div>
                 <p></p>
                 <span style="font:normal normal normal 14px arial">Eubank Area</span><br>
-                <input type="checkbox" id="eubanklanstime" style="margin-left:11px;" onclick="loadNChangeMap('eubankLansTimeLayer',this,'seismic','18','eubank_lans_ts','Eubank Mid-Lansing Time Structure');">Mid-Lansing Time Structure
+                <input type="checkbox" id="eubanklanstime" style="margin-left:11px;" onclick="loadNChangeMap('eubankLansTimeLayer',this,'seismic_1','18','eubank_lans_ts','Eubank Mid-Lansing Time Structure');">Mid-Lansing Time Structure
                 <div id="horizontalSlider_eubanklanstime" dojoType="dijit.form.HorizontalSlider" value="0" minimum="0" maximum="10" discreteValues="11"
                     intermediateChanges="true" style="width:75px;float:right;margin-right:5px;"
                     onChange="dojo.byId('horizontalSlider_eubanklanstime').value = arguments[0];changeOpacity('eubankLansTimeLayer',dojo.byId('horizontalSlider_eubanklanstime').value);">
@@ -2754,7 +2754,7 @@
                     onChange="dojo.byId('horizontalSlider_eubankvioltime').value = arguments[0];changeOpacity('eubankViolTimeLayer',dojo.byId('horizontalSlider_eubankvioltime').value);">
                 </div>
                 <br>
-                <input type="checkbox" id="eubankpctime" style="margin-left:11px;" onclick="loadNChangeMap('eubankPcTimeLayer',this,'seismic','17','eubank_pc_ts','Eubank Precambrian Time Structure');">Precambrian Time Structure
+                <input type="checkbox" id="eubankpctime" style="margin-left:11px;" onclick="loadNChangeMap('eubankPcTimeLayer',this,'seismic_1','17','eubank_pc_ts','Eubank Precambrian Time Structure');">Precambrian Time Structure
                 <div id="horizontalSlider_eubankpctime" dojoType="dijit.form.HorizontalSlider" value="0" minimum="0" maximum="10" discreteValues="11"
                     intermediateChanges="true" style="width:75px;float:right;margin-right:5px;"
                     onChange="dojo.byId('horizontalSlider_eubankpctime').value = arguments[0];changeOpacity('eubankPcTimeLayer',dojo.byId('horizontalSlider_eubankpctime').value);">
@@ -2862,14 +2862,14 @@
                 <input type="checkbox" style="margin-left:11px;" id="ppmrrwmerge" onclick="loadNChangeMap('pleasantPrairieMrrwMergeLayer',this,'seismic_2','1','pleasantprairie_mrrw','Pleasant Prairie Morrow Elev. (ft)');">Morrow Subsea<br>
                 <input type="checkbox" style="margin-left:11px;" id="ppmrmcmerge" onclick="loadNChangeMap('pleasantPrairieMrmcMergeLayer',this,'seismic_2','0','pleasantprairie_mrmc','Pleasant Prairie Meramec Elev. (ft)');">Meramec Subsea<br>
                 <p></p>
-                
+
                 <span style="font:normal normal bold 14px arial">Faults</span><br>
                 <input type="checkbox" id="missleakage" onclick="loadNChangeMap('missLeakageMajorLayer',this,'faults','0','faults_legend','');">Mississippian Top<br>
                 <input type="checkbox" id="bmissleakage" onclick="loadNChangeMap('baseMissLeakageMajorLayer',this,'faults','1','faults_legend','');">Mississippian Base<br>
                 <input type="checkbox" id="violafaults" onclick="loadNChangeMap('violaFaultsLayer',this,'faults','3','faults_legend','');">Viola<br>
                 <input type="checkbox" id="pcarbkfaults" onclick="loadNChangeMap('pcArbkFaultsLayer',this,'faults','2','faults_legend','');">Precambrian-Arbuckle<br>
                 <p></p>
-                
+
                 <table>
                 <tr><td><span style="font:normal normal bold 14px arial">Gravity / Magnetic</span></td></tr>
                 <tr><td><input type="checkbox" id="ga210m" onclick="loadNChangeMap('ga210mGravLayer',this,'gravity','0','gravanomaly210','Gravity Anomaly');">Gravity Anomaly 2-10 Mile</td>
@@ -2913,7 +2913,7 @@
                     onChange="dojo.byId('horizontalSlider_tmtp910m2').value = arguments[0];changeOpacity('tmtp910mMagLayer',dojo.byId('horizontalSlider_tmtp910m2').value);">
                 </div></td></tr>
                 </table>
-            
+
                 <p></p>
                 <span style="font:normal normal bold 14px arial">Remote Sensing Features</span><br>
                 <input type="checkbox" id="locallinears" onclick="loadNChangeMap('localScaleLinearsLayer',this,'remote_sensing_features','0','local_linears','Local Linears');">Local Scale Linears<br>
