@@ -1,4 +1,4 @@
-<cfset application.title = "Modeling Carbon Dioxide Sequestration Potential in Kansas">
+<cfset application.title = "Kansas Interactive Online Geology Mapper (KIOGM)">
 
 <cfset application.printDir = "http://maps.kgs.ku.edu/mk_test/co2">
 
