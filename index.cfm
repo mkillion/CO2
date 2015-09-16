@@ -13,7 +13,7 @@
 <meta name="description" content="Interactive map for the Kansas Geological Survey's Carbon Sequestration project." />
 <meta name="author" content="Mike Killion">
 <meta name="copyright" content="&copy; Kansas Geological Survey">
-<meta name="keywords" content="CO2, sequestration, carbon dioxide, KIOGM">
+<meta name="keywords" content="CO2, sequestration, carbon dioxide, KIOGM, Kansas, geology">
 
 <title>KIOGM</title>
 
