@@ -15,7 +15,7 @@
 <meta name="copyright" content="&copy; Kansas Geological Survey">
 <meta name="keywords" content="CO2, sequestration, carbon dioxide, KIOGM">
 
-<title>#application.title#</title>
+<title>KIOGM</title>
 
 <link rel="stylesheet" href="http://js.arcgis.com/3.7/js/dojo/dijit/themes/soria/soria.css">
 <link rel="stylesheet" href="http://js.arcgis.com/3.7/js/esri/css/esri.css">
