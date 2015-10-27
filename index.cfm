@@ -236,7 +236,7 @@
 		typeWellsLayer.setVisibleLayers([12]);
 
 		earthquakesLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/CO2/seismic_1/MapServer", { visible:false });
-		earthquakesLayer.setVisibleLayers([8]);
+		earthquakesLayer.setVisibleLayers([19]);
 
         class1WellsLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/CO2/class_1_2_wells/MapServer", { visible:false });
 		class1WellsLayer.setVisibleLayers([0]);
@@ -2003,15 +2003,15 @@
 
         if (year !== "all") {
             if (mag !== "all") {
-                def[8] = "the_date >= to_date('" + year + "-01-01 00:00:00','YYYY-MM-DD HH24:MI:SS') and the_date < to_date('" + nextYear + "-01-01 00:00:00','YYYY-MM-DD HH24:MI:SS') and mag >=" + mag;
+                def[19] = "the_date >= to_date('" + year + "-01-01 00:00:00','YYYY-MM-DD HH24:MI:SS') and the_date < to_date('" + nextYear + "-01-01 00:00:00','YYYY-MM-DD HH24:MI:SS') and mag >=" + mag;
             } else {
-                def[8] = "the_date >= to_date('" + year + "-01-01 00:00:00','YYYY-MM-DD HH24:MI:SS') and the_date < to_date('" + nextYear + "-01-01 00:00:00','YYYY-MM-DD HH24:MI:SS')";
+                def[19] = "the_date >= to_date('" + year + "-01-01 00:00:00','YYYY-MM-DD HH24:MI:SS') and the_date < to_date('" + nextYear + "-01-01 00:00:00','YYYY-MM-DD HH24:MI:SS') and mag >= 2";
             }
         } else {
             if (mag !== "all") {
-                def[8] = " mag >=" + mag;
+                def[19] = " mag >=" + mag;
             } else {
-                def[8] = "";
+                def[19] = "";
             }
         }
 
@@ -2022,16 +2022,16 @@
         var def = [];
 
         if (days !== "all") {
-            def[8] = "sysdate - the_date <= " + days;
+            def[19] = "sysdate - the_date <= " + days + " and mag >= 2";
         } else {
-            def[8] = "";
+            def[19] = "";
         }
         earthquakesLayer.setLayerDefinitions(def);
     }
 
     function filterQuakesRecent() {
     	var def = [];
-    	def[8] = "state = 'KS' and lower(net) <> 'ismpkansas' and the_date = (select max(the_date) from earthquakes where state = 'KS' and lower(net) <> 'ismpkansas')";
+    	def[19] = "state = 'KS' and mag >= 2 and the_date = (select max(the_date) from earthquakes where state = 'KS')";
     	earthquakesLayer.setLayerDefinitions(def);
     }
 
