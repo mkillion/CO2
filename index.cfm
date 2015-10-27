@@ -2031,7 +2031,7 @@
 
     function filterQuakesRecent() {
     	var def = [];
-    	def[19] = "state = 'KS' and mag >= 2 and the_date = (select max(the_date) from earthquakes where state = 'KS')";
+    	def[19] = "state = 'KS' and mag >= 2 and the_date = (select max(the_date) from earthquakes where state = 'KS' and mag >= 2)";
     	earthquakesLayer.setLayerDefinitions(def);
     }
 
