@@ -172,46 +172,43 @@
 		});
 
 		// Dynamic renderer layer:
-		app.rendererDataUrl = "http://services.kgs.ku.edu/arcgis/rest/services/oilgas/oilgas_fields/MapServer/1";
+		app.rendererDataUrl = "http://services.kgs.ku.edu/arcgis1/rest/services/co2/oilgas_fields_co2_rendering/MapServer/0";
 
 		xSectionPointGraphics = new esri.layers.GraphicsLayer();
 		xSectionLineGraphics = new esri.layers.GraphicsLayer();
 		eligibleWellsGraphics = new esri.layers.GraphicsLayer();
 
 		// Define layers:
-		//baseLayer = new esri.layers.ArcGISTiledMapServiceLayer("http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer");
 		baseLayer = new esri.layers.ArcGISTiledMapServiceLayer("http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer");
 
-		fieldsLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/oilgas/oilgas_fields/MapServer", { visible:false });
+		fieldsLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis2/rest/services/oilgas/oilgas_fields/MapServer", { visible:false });
 		fieldsLayer.setVisibleLayers([0]);
 
-		fieldsFilterRenderLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/oilgas/oilgas_fields/MapServer", { id:"og_fields", opacity:1.0, visible:false });
-		fieldsFilterRenderLayer.setVisibleLayers([1]);
+		fieldsFilterRenderLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis1/rest/services/co2/oilgas_fields_co2_rendering/MapServer", { id:"og_fields_render", opacity:1.0, visible:false });
+		fieldsFilterRenderLayer.setVisibleLayers([0]);
 
-		wellsNoLabelLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/CO2/general/MapServer", { visible:true, id:"ogwells" });
+		wellsNoLabelLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis1/rest/services/co2/general/MapServer", { visible:true, id:"ogwells" });
 		wellsNoLabelLayer.setVisibleLayers([0]);
 
-		wellsLeaseWellLabelLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/CO2/general/MapServer", { visible:false });
+		wellsLeaseWellLabelLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis1/rest/services/co2/general/MapServer", { visible:false });
 		wellsLeaseWellLabelLayer.setVisibleLayers([5]);
 
-		wellsAPILabelLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/CO2/general/MapServer", { visible:false });
+		wellsAPILabelLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis1/rest/services/co2/general/MapServer", { visible:false });
 		wellsAPILabelLayer.setVisibleLayers([6]);
 
-		wellsFormationLabelLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/CO2/general/MapServer", { visible:false });
+		wellsFormationLabelLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis1/rest/services/co2/general/MapServer", { visible:false });
 		wellsFormationLabelLayer.setVisibleLayers([7]);
 
-		wwc5Layer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/CO2/general/MapServer", { visible:false });
+		wwc5Layer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis1/rest/services/co2/general/MapServer", { visible:false });
 		wwc5Layer.setVisibleLayers([8]);
 
-		superTypesLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/CO2/general/MapServer", { visible:true });
+		superTypesLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis1/rest/services/co2/general/MapServer", { visible:true });
 		superTypesLayer.setVisibleLayers([10]);
 
-		hrzWellsLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/CO2/general/MapServer", { visible:false });
+		hrzWellsLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis1/rest/services/co2/general/MapServer", { visible:false });
 		hrzWellsLayer.setVisibleLayers([11]);
 
-		/*plssLayer = new esri.layers.ArcGISTiledMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/PLSS/section_township_range_0/MapServer");*/
-        plssLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/PLSS/section_township_range_3/MapServer");
-        //plssDynLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/PLSS/section_township_range_dyn/MapServer", { visible:false });
+        plssLayer = new esri.layers.ArcGISTiledMapServiceLayer("http://services.kgs.ku.edu/arcgis2/rest/services/plss/plss/MapServer");
 
 
 		var imageServiceParameters = new esri.layers.ImageServiceParameters();
@@ -223,25 +220,25 @@
 
 		nedLayer = new esri.layers.ArcGISImageServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/Elevation/National_Elevation_Dataset/ImageServer", { visible:false, imageServiceParameters:imageServiceParameters });
 
-		modelAreasLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/CO2/results/MapServer", { visible:true });
+		modelAreasLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis1/rest/services/co2/results/MapServer", { visible:true });
 		modelAreasLayer.setVisibleLayers([2]);
 
-		p10Layer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/CO2/results/MapServer", { visible:false });
+		p10Layer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis1/rest/services/co2/results/MapServer", { visible:false });
 		p10Layer.setVisibleLayers([0]);
 
-		p90Layer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/CO2/results/MapServer", { visible:false });
+		p90Layer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis1/rest/services/co2/results/MapServer", { visible:false });
 		p90Layer.setVisibleLayers([1]);
 
-		typeWellsLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/CO2/general/MapServer", { visible:true });
+		typeWellsLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis1/rest/services/co2/general/MapServer", { visible:true });
 		typeWellsLayer.setVisibleLayers([12]);
 
-		earthquakesLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/CO2/seismic_1/MapServer", { visible:false });
+		earthquakesLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis1/rest/services/co2/seismic_1/MapServer", { visible:false });
 		earthquakesLayer.setVisibleLayers([19]);
 
-        class1WellsLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/CO2/class_1_2_wells/MapServer", { visible:false });
+        class1WellsLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis1/rest/services/co2/class_1_2_wells/MapServer", { visible:false });
 		class1WellsLayer.setVisibleLayers([0]);
 
-        class2WellsLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/CO2/class_1_2_wells/MapServer", { visible:false });
+        class2WellsLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis1/rest/services/co2/class_1_2_wells/MapServer", { visible:false });
 		class2WellsLayer.setVisibleLayers([1]);
 
 
@@ -303,7 +300,7 @@
             var extType = pairs[0].substring(11);
             var extValue = pairs[1].substring(12);
 
-            var findTask = new esri.tasks.FindTask("http://services.kgs.ku.edu/arcgis/rest/services/CO2/general/MapServer");
+            var findTask = new esri.tasks.FindTask("http://services.kgs.ku.edu/arcgis1/rest/services/co2/general/MapServer");
 			var findParams = new esri.tasks.FindParameters();
 			findParams.returnGeometry = true;
 			findParams.contains = false;
@@ -444,7 +441,7 @@
 
 
 	function executeIdTask(evt) {
-		identify = new esri.tasks.IdentifyTask("http://services.kgs.ku.edu/arcgis/rest/services/CO2/general/MapServer");
+		identify = new esri.tasks.IdentifyTask("http://services.kgs.ku.edu/arcgis1/rest/services/co2/general/MapServer");
 
 		identifyParams = new esri.tasks.IdentifyParameters();
 		identifyParams.tolerance = 4;
@@ -784,7 +781,7 @@
 
 		var outSR = new esri.SpatialReference({ wkid: 4267});
 
-		var gsvc = new esri.tasks.GeometryService("http://services.kgs.ku.edu/arcgis/rest/services/Utilities/Geometry/GeometryServer");
+		var gsvc = new esri.tasks.GeometryService("http://services.kgs.ku.edu/arcgis1/rest/services/Utilities/Geometry/GeometryServer");
 
 		gsvc.project([ app.map.extent ], outSR, function(features) {
 			var xMin = features[0].xmin;
@@ -924,7 +921,7 @@
         if (isLoaded < 0) {   //first time layer has been called upon.
             loadedLyrs += layer;
 
-            layer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/CO2/" + srvc + "/MapServer", { visible:false, id:layer });
+            layer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis1/rest/services/co2/" + srvc + "/MapServer", { visible:false, id:layer });
             layer.setVisibleLayers(lID);
             app.map.addLayer(layer);
 
@@ -973,7 +970,7 @@
 
 
 	function quickZoom(type, value, button) {
-		findTask = new esri.tasks.FindTask("http://services.kgs.ku.edu/arcgis/rest/services/CO2/general/MapServer");
+		findTask = new esri.tasks.FindTask("http://services.kgs.ku.edu/arcgis1/rest/services/co2/general/MapServer");
 
 		findParams = new esri.tasks.FindParameters();
 		findParams.returnGeometry = true;
@@ -1407,7 +1404,7 @@
 				updateNumSelected();
 
 				// Return geometery for highlighting:
-				var qTask = new esri.tasks.QueryTask("http://services.kgs.ku.edu/arcgis/rest/services/CO2/general/MapServer/0");
+				var qTask = new esri.tasks.QueryTask("http://services.kgs.ku.edu/arcgis1/rest/services/co2/general/MapServer/0");
 
 				var query = new esri.tasks.Query;
 				query.returnGeometry = true;
@@ -1473,7 +1470,7 @@
 		var kids = xSectionKIDS.toString();
 
 		// Query remaining KIDs, clear all features from graphics layer, add remaining features back in:
-		var qTask = new esri.tasks.QueryTask("http://services.kgs.ku.edu/arcgis/rest/services/CO2/general/MapServer/0");
+		var qTask = new esri.tasks.QueryTask("http://services.kgs.ku.edu/arcgis1/rest/services/co2/general/MapServer/0");
 
 		var query = new esri.tasks.Query;
 		query.returnGeometry = true;
@@ -1600,7 +1597,7 @@
 		if (horizon == 'all') {
 			clearFieldFilter();
 		} else {
-			lyrDef[1] = "field_kid in (select field_kid from nomenclature.fields_reservoirs where upper(formation_name) in " + formationList + ")";
+			lyrDef[0] = "field_kid in (select field_kid from nomenclature.fields_reservoirs where upper(formation_name) in " + formationList + ")";
 		}
 
 		fieldsFilterRenderLayer.setLayerDefinitions(lyrDef);
@@ -1621,7 +1618,7 @@
 
 		var lyrDef = [];
 
-		lyrDef[1] = "";
+		lyrDef[0] = "";
 		fieldsFilterRenderLayer.setLayerDefinitions(lyrDef);
 		dojo.byId('field_filter_on').style.display = "none";
 
@@ -1774,8 +1771,8 @@
         var optionsArray = [];
         var drawingOptions = new esri.layers.LayerDrawingOptions();
         drawingOptions.renderer = renderer;
-        optionsArray[1] = drawingOptions;
-        app.map.getLayer("og_fields").setLayerDrawingOptions(optionsArray);
+        optionsArray[0] = drawingOptions;
+        app.map.getLayer("og_fields_render").setLayerDrawingOptions(optionsArray);
 
         /*if ( ! app.hasOwnProperty("legend") ) {
           createLegend();
@@ -1789,7 +1786,6 @@
 		  autoUpdate:true,
 		  respectCurrentMapScale:false,
           layerInfos : [ {
-            //layer : app.map.getLayer("og_fields"),
 			layer:fieldsFilterRenderLayer,
             title : "Title Goes Here"
           } ]
@@ -1918,7 +1914,7 @@
 
 
 	function printPDF() {
-		var printUrl = 'http://services.kgs.ku.edu/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task';
+		var printUrl = 'http://services.kgs.ku.edu/arcgis1/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task';
 		var printTask = new esri.tasks.PrintTask(printUrl);
         var printParams = new esri.tasks.PrintParameters();
         var template = new esri.tasks.PrintTemplate();
@@ -2574,62 +2570,62 @@
         </tr>
         <tr>
             <td style="text-align:left;width:33%">
-                <input type="checkbox" id="hpatopo" onclick="loadNChangeMap('hpaTopoLayer',this,'regional_geology_part2','2','hpatopo','High Plains Aquifer Topography (ft)');">High Plains Aquifer Topography<br>
-                <input type="checkbox" id="hpaiso" onclick="loadNChangeMap('hpaIsoLayer',this,'regional_geology_part2','0','hpaiso','High Plains Aquifer Isopach (ft)');">High Plains Aquifer Isopach<br>
-                <input type="checkbox" id="hpabedrock" onclick="loadNChangeMap('hpaBedrockLayer',this,'regional_geology_part2','1','hpabedrock','High Plains Aquifer Bedrock Elev. (ft)');">High Plains Aquifer Base Elevation<br>
-                <input type="checkbox" id="fthays" onclick="loadNChangeMap('baseFtHaysLayer',this,'regional_geology_part3','6,7','fthays_base','Fort Hays Base Elevation (ft)');">Fort Hays Base Elevation<br>
-                <input type="checkbox" id="greenhorntop" onclick="loadNChangeMap('greenhornTopLayer',this,'regional_geology_part3','10,11','greenhorn_top','Greenhorn Elevation (ft)');">Greenhorn Top Elevation<br>
-                <input type="checkbox" id="greenhornblaineiso" onclick="loadNChangeMap('greenhornBlaineIsoLayer',this,'regional_geology_part3','12','greenhorn_blaine_iso','Greenhorn to Blain Isopach (ft)');">Greenhorn to Blaine Isopach<br>
-                <input type="checkbox" id="blainesubsea" onclick="loadNChangeMap('blaineSubseaLayer',this,'regional_geology_part2','11,30','blaine_top','Blaine Top Elevation (ft)');">Blaine Top<br>
-                <input type="checkbox" id="blainecedariso" onclick="loadNChangeMap('blaineCedarIsoLayer',this,'regional_geology_part2','12','blainecedariso','Blaine to Cedar Hills Isopach (ft)');">Blaine to Cedar Hills Isopach<br>
-                <input type="checkbox" id="cedarhillstop" onclick="loadNChangeMap('cedarHillsTopLayer',this,'regional_geology_part3','8,9','cedarhills_top','Cedar Hills Top (ft)');">Cedar Hills Top<br>
-                <input type="checkbox" id="cedarhillsiso" onclick="loadNChangeMap('cedarHillsIsoLayer',this,'regional_geology_part2','14','cedarhills_iso','Cedar Hills Isopach (ft)');">Cedar Hills Isopach<br>
-                <input type="checkbox" id="stonecorraltop" onclick="loadNChangeMap('stoneCorralTopLayer',this,'regional_geology_part3','15,16','stonecorl_top','Stone Corral Top Elevation (ft)');">Stone Corral Top<br>
-                <input type="checkbox" id="stonecorrallansiso" onclick="loadNChangeMap('stoneCorralLansingIsoLayer',this,'regional_geology_part3','17,18','stonecorl_lans_iso','Stone Corral to Lansing Isopach (ft)');">Stone Corral to Lansing Isopach<br>
-                <input type="checkbox" id="stonecorralmissiso" onclick="loadNChangeMap('stoneCorralMissIsoLayer',this,'regional_geology_part3','13,14','stonecorral_miss_iso','Stone Corral to Miss. Isopach (ft)');">Stone Corral to Miss. Isopach<br>
-                <input type="checkbox" id="cimmsaltiso" onclick="loadNChangeMap('cimmSaltIsoLayer',this,'regional_geology_part2','15','cimmsalt_legend','Cimarron Salt Isopach (ft)');">Cimarron Salt Isopach<br>
-                <input type="checkbox" id="hutchtop" onclick="loadNChangeMap('hutchTopLayer',this,'regional_geology_part2','9,31','hutchsalt_top','Hutchinson Salt Top Elevation (ft)');">Hutchinson Salt Top<br>
-                <input type="checkbox" id="hutchchaseiso" onclick="loadNChangeMap('hutchChaseIsoLayer',this,'regional_geology_part2','10,32','hutch_chase_iso','Hutchinson Salt to Chase Isopach (ft)');">Hutchinson Salt to Chase Isopach<br>
-                <input type="checkbox" id="hutchnevaiso" onclick="loadNChangeMap('hutchNevaIsoLayer',this,'regional_geology_part2','13','hutchnevaiso','Hutchinson Salt to Neva Isopach (ft)');">Hutchinson Salt to Neva Isopach<br>
-                <input type="checkbox" id="chasesubsea" onclick="loadNChangeMap('chaseTopLayer',this,'regional_geology','15,30','chase_top','Chase Group Top (ft)');">Chase Top<br>
-				<input type="checkbox" id="ftrileydip" onclick="loadNChangeMap('fortRileyLayer',this,'regional_geology','13','blank','');">Fort Riley Dip
+                <input type="checkbox" id="hpatopo" onclick="loadNChangeMap('hpaTopoLayer',this,'regional_geology_2','2','hpatopo','High Plains Aquifer Topography (ft)');">High Plains Aquifer Topography<br>
+                <input type="checkbox" id="hpaiso" onclick="loadNChangeMap('hpaIsoLayer',this,'regional_geology_2','0','hpaiso','High Plains Aquifer Isopach (ft)');">High Plains Aquifer Isopach<br>
+                <input type="checkbox" id="hpabedrock" onclick="loadNChangeMap('hpaBedrockLayer',this,'regional_geology_2','1','hpabedrock','High Plains Aquifer Bedrock Elev. (ft)');">High Plains Aquifer Base Elevation<br>
+                <input type="checkbox" id="fthays" onclick="loadNChangeMap('baseFtHaysLayer',this,'regional_geology_3','6,7','fthays_base','Fort Hays Base Elevation (ft)');">Fort Hays Base Elevation<br>
+                <input type="checkbox" id="greenhorntop" onclick="loadNChangeMap('greenhornTopLayer',this,'regional_geology_3','10,11','greenhorn_top','Greenhorn Elevation (ft)');">Greenhorn Top Elevation<br>
+                <input type="checkbox" id="greenhornblaineiso" onclick="loadNChangeMap('greenhornBlaineIsoLayer',this,'regional_geology_3','12','greenhorn_blaine_iso','Greenhorn to Blain Isopach (ft)');">Greenhorn to Blaine Isopach<br>
+                <input type="checkbox" id="blainesubsea" onclick="loadNChangeMap('blaineSubseaLayer',this,'regional_geology_2','11,30','blaine_top','Blaine Top Elevation (ft)');">Blaine Top<br>
+                <input type="checkbox" id="blainecedariso" onclick="loadNChangeMap('blaineCedarIsoLayer',this,'regional_geology_2','12','blainecedariso','Blaine to Cedar Hills Isopach (ft)');">Blaine to Cedar Hills Isopach<br>
+                <input type="checkbox" id="cedarhillstop" onclick="loadNChangeMap('cedarHillsTopLayer',this,'regional_geology_3','8,9','cedarhills_top','Cedar Hills Top (ft)');">Cedar Hills Top<br>
+                <input type="checkbox" id="cedarhillsiso" onclick="loadNChangeMap('cedarHillsIsoLayer',this,'regional_geology_2','14','cedarhills_iso','Cedar Hills Isopach (ft)');">Cedar Hills Isopach<br>
+                <input type="checkbox" id="stonecorraltop" onclick="loadNChangeMap('stoneCorralTopLayer',this,'regional_geology_3','15,16','stonecorl_top','Stone Corral Top Elevation (ft)');">Stone Corral Top<br>
+                <input type="checkbox" id="stonecorrallansiso" onclick="loadNChangeMap('stoneCorralLansingIsoLayer',this,'regional_geology_3','17,18','stonecorl_lans_iso','Stone Corral to Lansing Isopach (ft)');">Stone Corral to Lansing Isopach<br>
+                <input type="checkbox" id="stonecorralmissiso" onclick="loadNChangeMap('stoneCorralMissIsoLayer',this,'regional_geology_3','13,14','stonecorral_miss_iso','Stone Corral to Miss. Isopach (ft)');">Stone Corral to Miss. Isopach<br>
+                <input type="checkbox" id="cimmsaltiso" onclick="loadNChangeMap('cimmSaltIsoLayer',this,'regional_geology_2','15','cimmsalt_legend','Cimarron Salt Isopach (ft)');">Cimarron Salt Isopach<br>
+                <input type="checkbox" id="hutchtop" onclick="loadNChangeMap('hutchTopLayer',this,'regional_geology_2','9,31','hutchsalt_top','Hutchinson Salt Top Elevation (ft)');">Hutchinson Salt Top<br>
+                <input type="checkbox" id="hutchchaseiso" onclick="loadNChangeMap('hutchChaseIsoLayer',this,'regional_geology_2','10,32','hutch_chase_iso','Hutchinson Salt to Chase Isopach (ft)');">Hutchinson Salt to Chase Isopach<br>
+                <input type="checkbox" id="hutchnevaiso" onclick="loadNChangeMap('hutchNevaIsoLayer',this,'regional_geology_2','13','hutchnevaiso','Hutchinson Salt to Neva Isopach (ft)');">Hutchinson Salt to Neva Isopach<br>
+                <input type="checkbox" id="chasesubsea" onclick="loadNChangeMap('chaseTopLayer',this,'regional_geology_1','15,30','chase_top','Chase Group Top (ft)');">Chase Top<br>
+				<input type="checkbox" id="ftrileydip" onclick="loadNChangeMap('fortRileyLayer',this,'regional_geology_1','13','blank','');">Fort Riley Dip
                 <div id="horizontalSlider_ftriley2" dojoType="dijit.form.HorizontalSlider" value="0" minimum="0" maximum="10" discreteValues="11"
                     intermediateChanges="true" style="width:75px;float:right;margin-right:100px;"
                     onChange="dojo.byId('horizontalSlider_ftriley2').value = arguments[0];changeOpacity('fortRileyLayer',dojo.byId('horizontalSlider_ftriley2').value);">
                 </div><br>
-                <input type="checkbox" id="stotlertop" onclick="loadNChangeMap('stotlerTopLayer',this,'regional_geology_part3','19,20','stotler_top','Stotler Top Elevation (ft)');">Stotler Top<br>
-                <input type="checkbox" id="stotlermissiso" onclick="loadNChangeMap('stotlerMissIsoLayer',this,'regional_geology_part3','23,24','stotler_miss_iso','Stotler to Mississippian Isopach (ft)');">Stotler to Mississippian Isopach<br>
-                <input type="checkbox" id="stotlerarbkiso" onclick="loadNChangeMap('stotlerArbkIsoLayer',this,'regional_geology_part3','21,22','stotler_arbk_iso','Stotler to Arbuckle Isopach (ft)');">Stotler to Arbuckle Isopach<br>
-                <input type="checkbox" id="hbnrsubsea" onclick="loadNChangeMap('hbnrSubseaRGLayer',this,'regional_geology','6,29','heebner','Heebner Top Elevation (ft)');">Heebner Top<br>
-                <input type="checkbox" id="lansingtop" onclick="loadNChangeMap('lansingTopLayer',this,'regional_geology_part3','4,5','lansing_top','Lansing Top (ft - sealevel)');">Lansing Top<br>
-                <input type="checkbox" id="marmatontop" onclick="loadNChangeMap('marmatonTopLayer',this,'regional_geology_part3','2,3','marmaton_top','Marmaton Top (ft - sealevel)');">Marmaton Top<br>
-                <input type="checkbox" id="chrkmissiso" onclick="loadNChangeMap('chrkMissIsoLayer',this,'regional_geology_part3','0,1','chrk_miss_iso','Cherokee to Mississippian Isopach (ft)');">Cherokee to Mississippian Isopach<br>
-                <input type="checkbox" id="atokansubsea" onclick="loadNChangeMap('atokanSubseaLayer',this,'regional_geology_part2','3','atokansubsea','Atokan Top Elevation (ft)');">Atokan Top<br>
-                <input type="checkbox" id="atokaniso" onclick="loadNChangeMap('atokanIsoLayer',this,'regional_geology_part2','6','atokaniso','Atokan Isopach (ft)');">Atokan Isopach<br>
-                <input type="checkbox" id="morrowsubsea" onclick="loadNChangeMap('morrowSubseaLayer',this,'regional_geology_part2','4,16','morrowsubsea','Morrow Top Elevation (ft)');">Morrow Top<br>
-                <input type="checkbox" id="morrowmissiso" onclick="loadNChangeMap('morrowMissIsoLayer',this,'regional_geology_part2','5,17','morrowmissiso','Morrow to Mississippian Isopach (ft)');">Morrow to Mississippian Isopach<br>
-                <input type="checkbox" id="misssubsea" onclick="loadNChangeMap('missSubseaRGLayer',this,'regional_geology','3,20','misssubsea','Mississippian Top Elevation (ft)');">Mississippian Top<br>
-                <input type="checkbox" id="missmissbaseiso" onclick="loadNChangeMap('missMissBaseIsoLayer',this,'regional_geology','14,25','missmissbaseiso','Mississippian Isopach (ft)');">Mississippian Isopach<br>
-                <input type="checkbox" id="chestersubsea" onclick="loadNChangeMap('chesterSubseaLayer',this,'regional_geology_part2','7,18','chestersubsea','Chester Top Elevation (ft)');">Chester Top<br>
-                <input type="checkbox" id="chesteriso" onclick="loadNChangeMap('chesterIsoLayer',this,'regional_geology_part2','8','chesteriso','Chester Isopach (ft)');">Chester Isopach<br>
-                <input type="checkbox" id="kdhksubsea" onclick="loadNChangeMap('kdhkSubseaLayer',this,'regional_geology','16,27','kdhksubsea','Kinderhook Top Elevation (ft)');">Kinderhook Top<br>
-                <input type="checkbox" id="kdhkiso" onclick="loadNChangeMap('kdhkIsoLayer',this,'regional_geology_part2','24','kdhkiso','Kinderhook Isopach (ft)');">Kinderhook Isopach<br>
-                <input type="checkbox" id="kdhksubseawellington" onclick="loadNChangeMap('kdhkWellingtonLayer',this,'regional_geology','17','kdhksubseawellington','Kinderhook Top Elevation (Wellington area, ft)');">Kinderhook Top (Wellington Area)<br>
-                <input type="checkbox" id="isochattmiss" onclick="loadNChangeMap('chattMissBaseLayer',this,'regional_geology','9','chattmissiso','Chattanooga Isopach (ft)');">Chattanooga Isopach<br>
-                <input type="checkbox" id="huntontop" onclick="loadNChangeMap('huntonTopLayer',this,'regional_geology_part2','22,23','huntontop','Hunton Elevation (ft)');">Hunton Top<br>
-                <input type="checkbox" id="huntoniso" onclick="loadNChangeMap('huntonIsoLayer',this,'regional_geology_part2','21','huntoniso','Hunton Isopach (ft)');">Hunton Isopach<br>
-                <input type="checkbox" id="violatop" onclick="loadNChangeMap('violaTopLayer',this,'regional_geology_part2','28,29','violatop','Viola Elevation (ft)');">Viola Top<br>
-                <input type="checkbox" id="violaiso" onclick="loadNChangeMap('violaIsoLayer',this,'regional_geology','28','violaiso','Viola Isopach (ft)');">Viola Isopach<br>
-                <input type="checkbox" id="simpsontop" onclick="loadNChangeMap('simpsonTopLayer',this,'regional_geology_part2','26,27','simpsontop','Simpson Elevation (ft)');">Simpson Top<br>
-                <input type="checkbox" id="simpsoniso" onclick="loadNChangeMap('simpsonIsoLayer',this,'regional_geology_part2','25','simpsoniso','Simpson Isopach (ft)');">Simpson Isopach<br>
-                <input type="checkbox" id="arbksubsea" onclick="loadNChangeMap('arbkSubseaRGLayer',this,'regional_geology','7,23','arbksubsea','Arbuckle Top Elevation (ft)');">Arbuckle Top<br>
-                <input type="checkbox" id="arbkisopach" onclick="loadNChangeMap('arbkIsopachRGLayer',this,'regional_geology','8,24','arbkpciso','Arbuckle Isopach (ft)');">Arbuckle Isopach<br>
-				<input type="checkbox" id="isojccroub" onclick="loadNChangeMap('jccRoubLayer',this,'regional_geology','5,22','jccroubiso','Jefferson City-Cotter to Roubidoux Isopach (ft)');">Jefferson City-Cotter to Roubidoux Iso.<br>
-				<input type="checkbox" id="isoroubgas" onclick="loadNChangeMap('roubGasconadeLayer',this,'regional_geology','12','roubgasiso','Roubidoux to Gasconade Isopach (ft)');">Roubidoux to Gasconade Isopach<br>
-                <input type="checkbox" id="isogasgunter" onclick="loadNChangeMap('gasGunterLayer',this,'regional_geology','10','gasgunteriso','Gasconade to Gunter Isopach (ft)');">Gasconade to Gunter Isopach<br>
-                <input type="checkbox" id="isogunterpc" onclick="loadNChangeMap('gunterPrecambLayer',this,'regional_geology','11','gunterpciso','Gunter to Precambrian Isopach (ft)');">Gunter to Precambrian Isopach<br>
-				<input type="checkbox" id="precambsubsea" onclick="loadNChangeMap('precambSubseaRGLayer',this,'regional_geology','1,18','pcsubsea','Precambrian Top Elevation (ft)');">Precambrian Top<br>
-				<input type="checkbox" id="precambdepth" onclick="loadNChangeMap('precambDepthLayer',this,'regional_geology','2,19','pcdepth','Precambrian Depth (ft)');">Precambrian Depth<br>
+                <input type="checkbox" id="stotlertop" onclick="loadNChangeMap('stotlerTopLayer',this,'regional_geology_3','19,20','stotler_top','Stotler Top Elevation (ft)');">Stotler Top<br>
+                <input type="checkbox" id="stotlermissiso" onclick="loadNChangeMap('stotlerMissIsoLayer',this,'regional_geology_3','23,24','stotler_miss_iso','Stotler to Mississippian Isopach (ft)');">Stotler to Mississippian Isopach<br>
+                <input type="checkbox" id="stotlerarbkiso" onclick="loadNChangeMap('stotlerArbkIsoLayer',this,'regional_geology_3','21,22','stotler_arbk_iso','Stotler to Arbuckle Isopach (ft)');">Stotler to Arbuckle Isopach<br>
+                <input type="checkbox" id="hbnrsubsea" onclick="loadNChangeMap('hbnrSubseaRGLayer',this,'regional_geology_1','6,29','heebner','Heebner Top Elevation (ft)');">Heebner Top<br>
+                <input type="checkbox" id="lansingtop" onclick="loadNChangeMap('lansingTopLayer',this,'regional_geology_3','4,5','lansing_top','Lansing Top (ft - sealevel)');">Lansing Top<br>
+                <input type="checkbox" id="marmatontop" onclick="loadNChangeMap('marmatonTopLayer',this,'regional_geology_3','2,3','marmaton_top','Marmaton Top (ft - sealevel)');">Marmaton Top<br>
+                <input type="checkbox" id="chrkmissiso" onclick="loadNChangeMap('chrkMissIsoLayer',this,'regional_geology_3','0,1','chrk_miss_iso','Cherokee to Mississippian Isopach (ft)');">Cherokee to Mississippian Isopach<br>
+                <input type="checkbox" id="atokansubsea" onclick="loadNChangeMap('atokanSubseaLayer',this,'regional_geology_2','3','atokansubsea','Atokan Top Elevation (ft)');">Atokan Top<br>
+                <input type="checkbox" id="atokaniso" onclick="loadNChangeMap('atokanIsoLayer',this,'regional_geology_2','6','atokaniso','Atokan Isopach (ft)');">Atokan Isopach<br>
+                <input type="checkbox" id="morrowsubsea" onclick="loadNChangeMap('morrowSubseaLayer',this,'regional_geology_2','4,16','morrowsubsea','Morrow Top Elevation (ft)');">Morrow Top<br>
+                <input type="checkbox" id="morrowmissiso" onclick="loadNChangeMap('morrowMissIsoLayer',this,'regional_geology_2','5,17','morrowmissiso','Morrow to Mississippian Isopach (ft)');">Morrow to Mississippian Isopach<br>
+                <input type="checkbox" id="misssubsea" onclick="loadNChangeMap('missSubseaRGLayer',this,'regional_geology_1','3,20','misssubsea','Mississippian Top Elevation (ft)');">Mississippian Top<br>
+                <input type="checkbox" id="missmissbaseiso" onclick="loadNChangeMap('missMissBaseIsoLayer',this,'regional_geology_1','14,25','missmissbaseiso','Mississippian Isopach (ft)');">Mississippian Isopach<br>
+                <input type="checkbox" id="chestersubsea" onclick="loadNChangeMap('chesterSubseaLayer',this,'regional_geology_2','7,18','chestersubsea','Chester Top Elevation (ft)');">Chester Top<br>
+                <input type="checkbox" id="chesteriso" onclick="loadNChangeMap('chesterIsoLayer',this,'regional_geology_2','8','chesteriso','Chester Isopach (ft)');">Chester Isopach<br>
+                <input type="checkbox" id="kdhksubsea" onclick="loadNChangeMap('kdhkSubseaLayer',this,'regional_geology_1','16,27','kdhksubsea','Kinderhook Top Elevation (ft)');">Kinderhook Top<br>
+                <input type="checkbox" id="kdhkiso" onclick="loadNChangeMap('kdhkIsoLayer',this,'regional_geology_2','24','kdhkiso','Kinderhook Isopach (ft)');">Kinderhook Isopach<br>
+                <input type="checkbox" id="kdhksubseawellington" onclick="loadNChangeMap('kdhkWellingtonLayer',this,'regional_geology_1','17','kdhksubseawellington','Kinderhook Top Elevation (Wellington area, ft)');">Kinderhook Top (Wellington Area)<br>
+                <input type="checkbox" id="isochattmiss" onclick="loadNChangeMap('chattMissBaseLayer',this,'regional_geology_1','9','chattmissiso','Chattanooga Isopach (ft)');">Chattanooga Isopach<br>
+                <input type="checkbox" id="huntontop" onclick="loadNChangeMap('huntonTopLayer',this,'regional_geology_2','22,23','huntontop','Hunton Elevation (ft)');">Hunton Top<br>
+                <input type="checkbox" id="huntoniso" onclick="loadNChangeMap('huntonIsoLayer',this,'regional_geology_2','21','huntoniso','Hunton Isopach (ft)');">Hunton Isopach<br>
+                <input type="checkbox" id="violatop" onclick="loadNChangeMap('violaTopLayer',this,'regional_geology_2','28,29','violatop','Viola Elevation (ft)');">Viola Top<br>
+                <input type="checkbox" id="violaiso" onclick="loadNChangeMap('violaIsoLayer',this,'regional_geology_1','28','violaiso','Viola Isopach (ft)');">Viola Isopach<br>
+                <input type="checkbox" id="simpsontop" onclick="loadNChangeMap('simpsonTopLayer',this,'regional_geology_2','26,27','simpsontop','Simpson Elevation (ft)');">Simpson Top<br>
+                <input type="checkbox" id="simpsoniso" onclick="loadNChangeMap('simpsonIsoLayer',this,'regional_geology_2','25','simpsoniso','Simpson Isopach (ft)');">Simpson Isopach<br>
+                <input type="checkbox" id="arbksubsea" onclick="loadNChangeMap('arbkSubseaRGLayer',this,'regional_geology_1','7,23','arbksubsea','Arbuckle Top Elevation (ft)');">Arbuckle Top<br>
+                <input type="checkbox" id="arbkisopach" onclick="loadNChangeMap('arbkIsopachRGLayer',this,'regional_geology_1','8,24','arbkpciso','Arbuckle Isopach (ft)');">Arbuckle Isopach<br>
+				<input type="checkbox" id="isojccroub" onclick="loadNChangeMap('jccRoubLayer',this,'regional_geology_1','5,22','jccroubiso','Jefferson City-Cotter to Roubidoux Isopach (ft)');">Jefferson City-Cotter to Roubidoux Iso.<br>
+				<input type="checkbox" id="isoroubgas" onclick="loadNChangeMap('roubGasconadeLayer',this,'regional_geology_1','12','roubgasiso','Roubidoux to Gasconade Isopach (ft)');">Roubidoux to Gasconade Isopach<br>
+                <input type="checkbox" id="isogasgunter" onclick="loadNChangeMap('gasGunterLayer',this,'regional_geology_1','10','gasgunteriso','Gasconade to Gunter Isopach (ft)');">Gasconade to Gunter Isopach<br>
+                <input type="checkbox" id="isogunterpc" onclick="loadNChangeMap('gunterPrecambLayer',this,'regional_geology_1','11','gunterpciso','Gunter to Precambrian Isopach (ft)');">Gunter to Precambrian Isopach<br>
+				<input type="checkbox" id="precambsubsea" onclick="loadNChangeMap('precambSubseaRGLayer',this,'regional_geology_1','1,18','pcsubsea','Precambrian Top Elevation (ft)');">Precambrian Top<br>
+				<input type="checkbox" id="precambdepth" onclick="loadNChangeMap('precambDepthLayer',this,'regional_geology_1','2,19','pcdepth','Precambrian Depth (ft)');">Precambrian Depth<br>
             <td style="text-align:left;width:33%" nowrap>
                 <span style="font:normal normal normal 14px arial">Anson-Bates-Wellington Area</span><br>
                 <input type="checkbox" id="abwseismic2" style="margin-left:11px;" onclick="loadNChangeMap('abwSeismicLayer',this,'seismic_1','0','abwseismic','Arbuckle Time Structure, A-B-W');">Arbuckle Time Structure
@@ -2917,14 +2913,14 @@
 
                 <p></p>
                 <span style="font:normal normal bold 14px arial">Remote Sensing Features</span><br>
-                <input type="checkbox" id="locallinears" onclick="loadNChangeMap('localScaleLinearsLayer',this,'remote_sensing_features','0','local_linears','Local Linears');">Local Scale Linears<br>
-                <input type="checkbox" id="localovals" onclick="loadNChangeMap('localScaleOvalsLayer',this,'remote_sensing_features','1','local_ovals','Local Ovals');">Local Scale Ovals<br>
-                <input type="checkbox" id="localtonals" onclick="loadNChangeMap('localScaleTonalsLayer',this,'remote_sensing_features','2','local_tonals','Local Tonals');">Local Scale Tonals<br>
-                <input type="checkbox" id="mediumkarst" onclick="loadNChangeMap('mediumScaleKarstLayer',this,'remote_sensing_features','3','karst','Karst');">Medium Scale Karst<br>
-                <input type="checkbox" id="mediumlinears" onclick="loadNChangeMap('mediumScaleLinearsLayer',this,'remote_sensing_features','4','medium_linears','Medium Linears');">Medium Scale Linears<br>
-                <input type="checkbox" id="regionalkarst" onclick="loadNChangeMap('regionalScaleKarstLayer',this,'remote_sensing_features','6,11','karst','Karst');">Regional Scale Karst<br>
-                <input type="checkbox" id="regionallinears" onclick="loadNChangeMap('regionalScaleLinearsLayer',this,'remote_sensing_features','5,9,10','regional_linears','Regional Linears');">Regional Scale Linears<br>
-                <input type="checkbox" id="swksdrainage" onclick="loadNChangeMap('swKsDrainageLayer',this,'remote_sensing_features','8,7','swksdrainage','Drainage');">SW: Drainage/Topo<br>
+                <input type="checkbox" id="locallinears" onclick="loadNChangeMap('localScaleLinearsLayer',this,'remote_sensing','0','local_linears','Local Linears');">Local Scale Linears<br>
+                <input type="checkbox" id="localovals" onclick="loadNChangeMap('localScaleOvalsLayer',this,'remote_sensing','1','local_ovals','Local Ovals');">Local Scale Ovals<br>
+                <input type="checkbox" id="localtonals" onclick="loadNChangeMap('localScaleTonalsLayer',this,'remote_sensing','2','local_tonals','Local Tonals');">Local Scale Tonals<br>
+                <input type="checkbox" id="mediumkarst" onclick="loadNChangeMap('mediumScaleKarstLayer',this,'remote_sensing','3','karst','Karst');">Medium Scale Karst<br>
+                <input type="checkbox" id="mediumlinears" onclick="loadNChangeMap('mediumScaleLinearsLayer',this,'remote_sensing','4','medium_linears','Medium Linears');">Medium Scale Linears<br>
+                <input type="checkbox" id="regionalkarst" onclick="loadNChangeMap('regionalScaleKarstLayer',this,'remote_sensing','6,11','karst','Karst');">Regional Scale Karst<br>
+                <input type="checkbox" id="regionallinears" onclick="loadNChangeMap('regionalScaleLinearsLayer',this,'remote_sensing','5,9,10','regional_linears','Regional Linears');">Regional Scale Linears<br>
+                <input type="checkbox" id="swksdrainage" onclick="loadNChangeMap('swKsDrainageLayer',this,'remote_sensing','8,7','swksdrainage','Drainage');">SW: Drainage/Topo<br>
             </td>
         </tr>
     </table>
