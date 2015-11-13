@@ -181,8 +181,7 @@
 		// Define layers:
 		baseLayer = new esri.layers.ArcGISTiledMapServiceLayer("http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer");
 
-		fieldsLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis2/rest/services/oilgas/oilgas_fields/MapServer", { visible:false });
-		fieldsLayer.setVisibleLayers([0]);
+		fieldsLayer = new esri.layers.ArcGISTiledMapServiceLayer("http://services.kgs.ku.edu/arcgis2/rest/services/oilgas/oilgas_fields/MapServer", { visible:false });
 
 		fieldsFilterRenderLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis1/rest/services/co2/oilgas_fields_co2_rendering/MapServer", { id:"og_fields_render", opacity:1.0, visible:false });
 		fieldsFilterRenderLayer.setVisibleLayers([0]);
