@@ -240,6 +240,9 @@
         class2WellsLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis1/rest/services/co2/class_1_2_wells/MapServer", { visible:false });
 		class2WellsLayer.setVisibleLayers([1]);
 
+		pcLithoLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis1/rest/services/co2/class_1_2_wells/MapServer", { visible:false });
+		pcLithoLayer.setVisibleLayers([2]);
+
 
 
 		// Add layers (first layer added displays on the bottom):
@@ -263,6 +266,7 @@
 		app.map.addLayer(earthquakesLayer);
         app.map.addLayer(class1WellsLayer);
         app.map.addLayer(class2WellsLayer);
+        app.map.addLayer(pcLithoLayer);
 
 
 		visibleWellLyr = wellsNoLabelLayer;
@@ -2112,6 +2116,10 @@
                 </tr>
 
                 <tr><td><hr /></td></tr>
+				<tr>
+                    <td colspan="2"><input type="checkbox" id="pclitho" onClick="changeMap(pcLithoLayer,this,'pc_lithology','Precambrian Basement Lithology');">Precambrian Basement Lithology</td>
+                </tr>
+
                 <tr>
                     <td colspan="2"><input type="checkbox" id="earthquakes" onClick="changeMap(earthquakesLayer,this,'earthquakes','Earthquakes');">Earthquakes 2.0+ &nbsp;&nbsp; <span style="text-decoration:underline;cursor:pointer;font-size:12px;" onclick="dijit.byId('quakefilter').show();">Filter</span>&nbsp;&nbsp;&nbsp;<span style="text-decoration:underline;cursor:pointer;font-size:12px;" onclick="dijit.byId('quakenotes').show();">Read Me</span></td>
                 </tr>
