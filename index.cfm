@@ -243,6 +243,9 @@
 		pcLithoLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis1/rest/services/co2/class_1_2_wells/MapServer", { visible:false });
 		pcLithoLayer.setVisibleLayers([2]);
 
+		wellingtonEarthquakesLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis1/rest/services/co2/seismic_1/MapServer", { visible:false });
+		wellingtonEarthquakesLayer.setVisibleLayers([20]);
+
 
 
 		// Add layers (first layer added displays on the bottom):
@@ -264,6 +267,7 @@
 		app.map.addLayer(typeWellsLayer);
 		app.map.addLayer(modelAreasLayer);
 		app.map.addLayer(earthquakesLayer);
+		app.map.addLayer(wellingtonEarthquakesLayer);
         app.map.addLayer(class1WellsLayer);
         app.map.addLayer(class2WellsLayer);
         app.map.addLayer(pcLithoLayer);
@@ -2115,13 +2119,21 @@
                     <td colspan="2"><input type="checkbox" id="class2wells" onClick="changeMap(class2WellsLayer,this,'blue_tri','Class II Wells');">Class II Injection Wells</td>
                 </tr>
 
-                <tr><td><hr /></td></tr>
-				<tr>
-                    <td colspan="2"><input type="checkbox" id="pclitho" onClick="changeMap(pcLithoLayer,this,'pc_lithology','Precambrian Basement Lithology');">Precambrian Basement Lithology</td>
+                <tr><td colspan="2"><hr /></td></tr>
+
+                <tr><td colspan="2">Earthquakes</td></tr>
+                <tr>
+                    <td colspan="2"><input type="checkbox" id="earthquakes" onClick="changeMap(earthquakesLayer,this,'usgsearthquakes','USGS Array Earthquakes');">USGS Array >2.0 &nbsp;&nbsp; <span style="text-decoration:underline;cursor:pointer;font-size:12px;" onclick="dijit.byId('quakefilter').show();">Filter</span>&nbsp;&nbsp;&nbsp;<span style="text-decoration:underline;cursor:pointer;font-size:12px;" onclick="dijit.byId('usgsquakenotes').show();">Read Me</span></td>
                 </tr>
 
                 <tr>
-                    <td colspan="2"><input type="checkbox" id="earthquakes" onClick="changeMap(earthquakesLayer,this,'earthquakes','Earthquakes');">Earthquakes 2.0+ &nbsp;&nbsp; <span style="text-decoration:underline;cursor:pointer;font-size:12px;" onclick="dijit.byId('quakefilter').show();">Filter</span>&nbsp;&nbsp;&nbsp;<span style="text-decoration:underline;cursor:pointer;font-size:12px;" onclick="dijit.byId('quakenotes').show();">Read Me</span></td>
+                    <td colspan="2"><input type="checkbox" id="wellingtonearthquakes" onClick="changeMap(wellingtonEarthquakesLayer,this,'wellingtonearthquakes','Wellington Array Earthquakes');">Wellington Array >1.0 &nbsp;&nbsp; <span style="text-decoration:underline;cursor:pointer;font-size:12px;" onclick="dijit.byId('wellingtonquakefilter').show();">Filter</span>&nbsp;&nbsp;&nbsp;<span style="text-decoration:underline;cursor:pointer;font-size:12px;" onclick="dijit.byId('wellingtonquakenotes').show();">Read Me</span></td>
+                </tr>
+
+                <tr><td colspan="2"><hr /></td></tr>
+
+                <tr>
+                    <td colspan="2"><input type="checkbox" id="pclitho" onClick="changeMap(pcLithoLayer,this,'pc_lithology','Precambrian Basement Lithology');">Precambrian Basement Lithology</td>
                 </tr>
 
                 <tr>
@@ -2193,7 +2205,7 @@
 
                 <tr><td class="note" id="vis_msg" colspan="2">* Layer not visible at all scales</td></tr>
 
-				<tr><td><hr /></td></tr>
+				<tr><td colspan="2"><hr /></td></tr>
 
                 <tr>
                 	<td><input type="checkbox" id="p10" onClick="changeMap(p10Layer,this,'p10_legend','CO2 P10 Storage Est. (tons/100 sq km)');">P10 Storage Est.</td>
@@ -2509,16 +2521,66 @@
     </div>
 </div>
 
-<!--- Earthquake Notes dialog: --->
-<div dojoType="dijit.Dialog" id="quakenotes" title="Earthquake Data Notes" style="text-align:center;font:normal normal bold 14px arial">
+<!-- Wellington earthquake filter dialog: -->
+<div dojoType="dijit.Dialog" id="wellingtonquakefilter" title="Filter Earthquakes" style="text-align:center;font:normal normal bold 14px arial">
     <div style="text-align:left;font:normal normal normal 12px arial">
+        <!--- <p>
+        <input type="button" onclick="filterQuakesRecent();" value="Show Last Event in Kansas" />
+   		</p>
+   		OR --->
+    	<p>
+        Year:&nbsp;
+        <select name="year" id="year">
+            <option value="all" selected>All</option>
+            <option value="2016">2016</option>
+            <option value="2015">2015</option>
+            <!--- <option value="2014">2014</option>
+            <option value="2013">2013</option> --->
+        </select>
+        &nbsp;&nbsp;
+        Magnitude:&nbsp;
+        <select name="mag" id="mag">
+            <option value="all" selected>All</option>
+            <option value="2">2.0+</option>
+            <option value="3">3.0+</option>
+            <option value="4">4.0+</option>
+        </select>
+        &nbsp;&nbsp;
+        <input type="button" onclick="filterQuakes(dojo.byId('year').value,dojo.byId('mag').value);" value="Go" />
+        </p>
         <p>
-        Earthquake data for Oklahoma is incomplete and only extends back to 12/2/2014. Only events occurring in northern Oklahoma<br>
-        (north of Medford) are included on the mapper.
-        <p>Data for all events occurring between 1/9/2013 and 3/7/2014 was provided by the Oklahoma Geological Survey - all<br>
-        other data is from the USGS.
+        OR
         </p>
+        <p>
+        Show all earthquakes &nbsp;
+        <select name="days" id="days">
+            <option value="7" selected>in the last week</option>
+            <option value="14">in the last two weeks</option></option>
+            <option value="30">in the last month</option>
+            <!--- <option value="all">since 2013</option> --->
+        </select>
+        &nbsp;&nbsp;
+        <input type="button" onclick="filterQuakesDays(dojo.byId('days').value)" value="Go" />
         </p>
+        <p>
+        <input type="button" onclick="clearQuakeFilter()" value="Reset" />
+        </p>
+    </div>
+</div>
+
+<!--- Earthquake Notes dialog: --->
+<div dojoType="dijit.Dialog" id="usgsquakenotes" title="Earthquake Data Notes" style="text-align:center;font:normal normal bold 14px arial">
+    <div style="text-align:left;font:normal normal normal 12px arial">
+        <p>Events in this layer are from the USGS "us" and "ismpkansas" nets, and the Oklahoma Geological Survey.</p>
+        <p>Data for all events occurring between 1/9/2013 and 3/7/2014 was provided by the Oklahoma Geological Survey.</p>
+        <p>Earthquake data for Oklahoma is incomplete and only extends back to 12/2/2014. Only events occurring in northern Oklahoma<br>
+        (north of Medford) are included on the mapper.</p>
+    </div>
+</div>
+
+<div dojoType="dijit.Dialog" id="wellingtonquakenotes" title="Earthquake Data Notes" style="text-align:center;font:normal normal bold 14px arial">
+    <div style="text-align:left;font:normal normal normal 12px arial">
+        <p>(Lynn to provide text)</p>
     </div>
 </div>
 
