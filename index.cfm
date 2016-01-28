@@ -2069,6 +2069,12 @@
     	earthquakesLayer.setLayerDefinitions(def);
     }
 
+    function wellingtonFilterQuakesRecent() {
+    	var def = [];
+    	def[20] = "latitude >= 37 and event = (select max(event) from earthquakes_wellington where latitude >= 37)";
+    	wellingtonEarthquakesLayer.setLayerDefinitions(def);
+    }
+
     function clearQuakeFilter() {
         var def = [];
         def = "";
@@ -2167,7 +2173,7 @@
                 </tr>
 
                 <tr>
-                    <td colspan="2"><input type="checkbox" id="wellingtonearthquakes" onClick="changeMap(wellingtonEarthquakesLayer,this,'wellingtonearthquakes','Wellington Array Earthquakes');">Wellington Array >1.0 &nbsp;&nbsp; <span style="text-decoration:underline;cursor:pointer;font-size:12px;" onclick="dijit.byId('wellingtonquakefilter').show();">Filter</span>&nbsp;&nbsp;&nbsp;<span style="text-decoration:underline;cursor:pointer;font-size:12px;" onclick="dijit.byId('wellingtonquakenotes').show();">Read Me</span></td>
+                    <td colspan="2"><input type="checkbox" id="wellingtonearthquakes" onClick="changeMap(wellingtonEarthquakesLayer,this,'wellingtonearthquakes','Wellington Array Earthquakes');">Wellington Array &nbsp;&nbsp; <span style="text-decoration:underline;cursor:pointer;font-size:12px;" onclick="dijit.byId('wellingtonquakefilter').show();">Filter</span>&nbsp;&nbsp;&nbsp;<span style="text-decoration:underline;cursor:pointer;font-size:12px;" onclick="dijit.byId('wellingtonquakenotes').show();">Read Me</span></td>
                 </tr>
 
                 <tr><td colspan="2"><hr /></td></tr>
@@ -2564,10 +2570,10 @@
 <!-- Wellington earthquake filter dialog: -->
 <div dojoType="dijit.Dialog" id="wellingtonquakefilter" title="Filter Earthquakes" style="text-align:center;font:normal normal bold 14px arial">
     <div style="text-align:left;font:normal normal normal 12px arial">
-        <!--- <p>
+        <p>
         <input type="button" onclick="wellingtonFilterQuakesRecent();" value="Show Last Event in Kansas" />
    		</p>
-   		OR --->
+   		OR
     	<p>
         Year:&nbsp;
         <select name="wellingtonyear" id="wellingtonyear">
