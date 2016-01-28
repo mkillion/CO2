@@ -2021,6 +2021,26 @@
         earthquakesLayer.setLayerDefinitions(def);
     }
 
+    function wellingtonFilterQuakes(year, mag) {
+        var nextYear = parseInt(year) + 1;
+        var def = [];
+
+        if (year !== "all") {
+            if (mag !== "all") {
+                def[20] = "event >= to_date('" + year + "-01-01 00:00:00','YYYY-MM-DD HH24:MI:SS') and event < to_date('" + nextYear + "-01-01 00:00:00','YYYY-MM-DD HH24:MI:SS') and local_mag >=" + mag;
+            } else {
+                def[20] = "event >= to_date('" + year + "-01-01 00:00:00','YYYY-MM-DD HH24:MI:SS') and event < to_date('" + nextYear + "-01-01 00:00:00','YYYY-MM-DD HH24:MI:SS')";
+            }
+        } else {
+            if (mag !== "all") {
+                def[20] = " local_mag >=" + mag;
+            } else {
+                def[20] = "";
+            }
+        }
+        wellingtonEarthquakesLayer.setLayerDefinitions(def);
+    }
+
     function filterQuakesDays(days) {
         var def = [];
 
@@ -2056,6 +2076,15 @@
         days.options[0].selected="selected";
         mag.options[0].selected="selected";
         year.options[0].selected="selected";
+    }
+
+    function wellingtonClearQuakeFilter() {
+        var def = [];
+        def = "";
+        wellingtonEarthquakesLayer.setLayerDefinitions(def);
+        wellingtondays.options[0].selected="selected";
+        wellingtonmag.options[0].selected="selected";
+        wellingtonyear.options[0].selected="selected";
     }
 </script>
 
@@ -2541,7 +2570,7 @@
    		OR --->
     	<p>
         Year:&nbsp;
-        <select name="year" id="year">
+        <select name="wellingtonyear" id="wellingtonyear">
             <option value="all" selected>All</option>
             <option value="2016">2016</option>
             <option value="2015">2015</option>
@@ -2550,31 +2579,31 @@
         </select>
         &nbsp;&nbsp;
         Magnitude:&nbsp;
-        <select name="mag" id="mag">
+        <select name="wellingtonmag" id="wellingtonmag">
             <option value="all" selected>All</option>
             <option value="2">2.0+</option>
             <option value="3">3.0+</option>
             <option value="4">4.0+</option>
         </select>
         &nbsp;&nbsp;
-        <input type="button" onclick="wellingtonFilterQuakes(dojo.byId('year').value,dojo.byId('mag').value);" value="Go" />
+        <input type="button" onclick="wellingtonFilterQuakes(dojo.byId('wellingtonyear').value,dojo.byId('wellingtonmag').value);" value="Go" />
         </p>
         <p>
         OR
         </p>
         <p>
         Show all earthquakes &nbsp;
-        <select name="days" id="days">
+        <select name="wellingtondays" id="wellingtondays">
             <option value="7" selected>in the last week</option>
             <option value="14">in the last two weeks</option></option>
             <option value="30">in the last month</option>
             <!--- <option value="all">since 2013</option> --->
         </select>
         &nbsp;&nbsp;
-        <input type="button" onclick="wellingtonFilterQuakesDays(dojo.byId('days').value)" value="Go" />
+        <input type="button" onclick="wellingtonFilterQuakesDays(dojo.byId('wellingtondays').value)" value="Go" />
         </p>
         <p>
-        <input type="button" onclick="clearQuakeFilter()" value="Reset" />
+        <input type="button" onclick="wellingtonClearQuakeFilter()" value="Reset" />
         </p>
     </div>
 </div>
@@ -2589,6 +2618,7 @@
     </div>
 </div>
 
+<!--- Wellington earthquake Notes dialog: --->
 <div dojoType="dijit.Dialog" id="wellingtonquakenotes" title="Earthquake Data Notes" style="text-align:center;font:normal normal bold 14px arial">
     <div style="text-align:left;font:normal normal normal 12px arial">
         <p>(Lynn to provide text)</p>
