@@ -2032,6 +2032,17 @@
         earthquakesLayer.setLayerDefinitions(def);
     }
 
+    function wellingtonFilterQuakesDays(days) {
+        var def = [];
+
+        if (days !== "all") {
+            def[20] = "sysdate - event <= " + days;
+        } else {
+            def[20] = "";
+        }
+        wellingtonEarthquakesLayer.setLayerDefinitions(def);
+    }
+
     function filterQuakesRecent() {
     	var def = [];
     	def[19] = "state = 'KS' and mag >= 2 and the_date = (select max(the_date) from earthquakes where state = 'KS' and mag >= 2)";
@@ -2525,7 +2536,7 @@
 <div dojoType="dijit.Dialog" id="wellingtonquakefilter" title="Filter Earthquakes" style="text-align:center;font:normal normal bold 14px arial">
     <div style="text-align:left;font:normal normal normal 12px arial">
         <!--- <p>
-        <input type="button" onclick="filterQuakesRecent();" value="Show Last Event in Kansas" />
+        <input type="button" onclick="wellingtonFilterQuakesRecent();" value="Show Last Event in Kansas" />
    		</p>
    		OR --->
     	<p>
@@ -2546,7 +2557,7 @@
             <option value="4">4.0+</option>
         </select>
         &nbsp;&nbsp;
-        <input type="button" onclick="filterQuakes(dojo.byId('year').value,dojo.byId('mag').value);" value="Go" />
+        <input type="button" onclick="wellingtonFilterQuakes(dojo.byId('year').value,dojo.byId('mag').value);" value="Go" />
         </p>
         <p>
         OR
@@ -2560,7 +2571,7 @@
             <!--- <option value="all">since 2013</option> --->
         </select>
         &nbsp;&nbsp;
-        <input type="button" onclick="filterQuakesDays(dojo.byId('days').value)" value="Go" />
+        <input type="button" onclick="wellingtonFilterQuakesDays(dojo.byId('days').value)" value="Go" />
         </p>
         <p>
         <input type="button" onclick="clearQuakeFilter()" value="Reset" />
