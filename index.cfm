@@ -2172,9 +2172,9 @@
                     <td colspan="2"><input type="checkbox" id="earthquakes" onClick="changeMap(earthquakesLayer,this,'usgsearthquakes','USGS Array Earthquakes');">USGS Array >2.0 &nbsp;&nbsp; <span style="text-decoration:underline;cursor:pointer;font-size:12px;" onclick="dijit.byId('quakefilter').show();">Filter</span>&nbsp;&nbsp;&nbsp;<span style="text-decoration:underline;cursor:pointer;font-size:12px;" onclick="dijit.byId('usgsquakenotes').show();">Read Me</span></td>
                 </tr>
 
-                <tr>
+                <!--- <tr>
                     <td colspan="2"><input type="checkbox" id="wellingtonearthquakes" onClick="changeMap(wellingtonEarthquakesLayer,this,'wellingtonearthquakes','Wellington Array Earthquakes');">Wellington Array &nbsp;&nbsp; <span style="text-decoration:underline;cursor:pointer;font-size:12px;" onclick="dijit.byId('wellingtonquakefilter').show();">Filter</span>&nbsp;&nbsp;&nbsp;<span style="text-decoration:underline;cursor:pointer;font-size:12px;" onclick="dijit.byId('wellingtonquakenotes').show();">Read Me</span></td>
-                </tr>
+                </tr> --->
 
                 <tr><td colspan="2"><hr /></td></tr>
 
@@ -2627,7 +2627,10 @@
 <!--- Wellington earthquake Notes dialog: --->
 <div dojoType="dijit.Dialog" id="wellingtonquakenotes" title="Earthquake Data Notes" style="text-align:center;font:normal normal bold 14px arial">
     <div style="text-align:left;font:normal normal normal 12px arial">
-        <p>(Lynn to provide text)</p>
+        <p>Events in this layer are from the Wellington Field Seismometer Array installed by the KGS as part of research<br>
+        on carbon management at Wellington Field funded by the U.S. Department of Energy under contract DE-FE0006821.<br>
+        The catalog of events reported goes back to April 2015 to the present and is updated on approximately a weekly basis.<br>
+        The seismometers are managed by a research group at the KGS and the Department of Geology at The University of Kansas.</p>
     </div>
 </div>
 
