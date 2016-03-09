@@ -213,7 +213,9 @@
 		var imageServiceParameters = new esri.layers.ImageServiceParameters();
         imageServiceParameters.format = "jpg";
 
-		drgLayer = new esri.layers.ArcGISImageServiceLayer("http://imageserver.kansasgis.org/arcgis/rest/services/Statewide/DRG/ImageServer", { visible:false, imageServiceParameters:imageServiceParameters });
+		//drgLayer = new esri.layers.ArcGISImageServiceLayer("http://services.kgs.ku.edu/arcgis7/rest/services/Elevation/USGS_Digital_Topo/MapServer", { visible:false, imageServiceParameters:imageServiceParameters });
+		drgLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis7/rest/services/Elevation/USGS_Digital_Topo/MapServer", { visible:false });
+		drgLayer.setVisibleLayers([11]);
 
 		naipLayer = new esri.layers.ArcGISImageServiceLayer("http://services.kgs.ku.edu/arcgis7/rest/services/IMAGERY_STATEWIDE/FSA_NAIP_2014_Color/ImageServer", { visible:false, imageServiceParameters:imageServiceParameters });
 
@@ -2172,9 +2174,9 @@
                     <td colspan="2"><input type="checkbox" id="earthquakes" onClick="changeMap(earthquakesLayer,this,'usgsearthquakes','USGS Array Earthquakes');">USGS Array >2.0 &nbsp;&nbsp; <span style="text-decoration:underline;cursor:pointer;font-size:12px;" onclick="dijit.byId('quakefilter').show();">Filter</span>&nbsp;&nbsp;&nbsp;<span style="text-decoration:underline;cursor:pointer;font-size:12px;" onclick="dijit.byId('usgsquakenotes').show();">Read Me</span></td>
                 </tr>
 
-                <!--- <tr>
+                <!---<tr>
                     <td colspan="2"><input type="checkbox" id="wellingtonearthquakes" onClick="changeMap(wellingtonEarthquakesLayer,this,'wellingtonearthquakes','Wellington Array Earthquakes');">Wellington Array &nbsp;&nbsp; <span style="text-decoration:underline;cursor:pointer;font-size:12px;" onclick="dijit.byId('wellingtonquakefilter').show();">Filter</span>&nbsp;&nbsp;&nbsp;<span style="text-decoration:underline;cursor:pointer;font-size:12px;" onclick="dijit.byId('wellingtonquakenotes').show();">Read Me</span></td>
-                </tr> --->
+                </tr>--->
 
                 <tr><td colspan="2"><hr /></td></tr>
 
