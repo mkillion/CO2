@@ -2029,13 +2029,13 @@
 
         if (year !== "all") {
             if (mag !== "all") {
-                def[20] = "event >= to_date('" + year + "-01-01 00:00:00','YYYY-MM-DD HH24:MI:SS') and event < to_date('" + nextYear + "-01-01 00:00:00','YYYY-MM-DD HH24:MI:SS') and local_mag >=" + mag;
+                def[20] = "event >= to_date('" + year + "-01-01 00:00:00','YYYY-MM-DD HH24:MI:SS') and event < to_date('" + nextYear + "-01-01 00:00:00','YYYY-MM-DD HH24:MI:SS') and moment_mag >=" + mag;
             } else {
                 def[20] = "event >= to_date('" + year + "-01-01 00:00:00','YYYY-MM-DD HH24:MI:SS') and event < to_date('" + nextYear + "-01-01 00:00:00','YYYY-MM-DD HH24:MI:SS')";
             }
         } else {
             if (mag !== "all") {
-                def[20] = " local_mag >=" + mag;
+                def[20] = " moment_mag >=" + mag;
             } else {
                 def[20] = "";
             }
