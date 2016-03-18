@@ -84,6 +84,7 @@
 	dojo.require("esri.tasks.geometry");
 	dojo.require("esri.tasks.query");
 	dojo.require("esri.geometry");
+	dojo.require("esri.graphic");
 
 	dojo.require("dijit.layout.ContentPane");
 	dojo.require("dijit.layout.TabContainer");
@@ -2094,6 +2095,50 @@
         wellingtonmag.options[0].selected="selected";
         wellingtonyear.options[0].selected="selected";
     }
+
+
+	function zoomToLatLong(lat,lon,datum) {
+		var gsvc = new esri.tasks.GeometryService("http://services.kgs.ku.edu/arcgis2/rest/services/Utilities/Geometry/GeometryServer");
+		var params = new esri.tasks.ProjectParameters();
+		var wgs84Sr = new esri.SpatialReference( { wkid: 4326 } );
+
+		if (lon > 0) {
+			lon = 0 - lon;
+		}
+
+		switch (datum) {
+			case "nad27":
+				var srId = 4267;
+				break;
+			case "nad83":
+				var srId = 4269;
+				break;
+			case "wgs84":
+				var srId = 4326;
+				break;
+		}
+
+		var p = new esri.geometry.Point(lon, lat, new esri.SpatialReference( { wkid: srId } ) );
+		params.geometries = [p];
+		params.outSR = wgs84Sr;
+
+		gsvc.project(params, function(features) {
+			var pt84 = new esri.geometry.Point(features[0].x, features[0].y, wgs84Sr);
+
+			var wmPt = esri.geometry.geographicToWebMercator(pt84);
+
+			var ptSymbol = new esri.symbol.SimpleMarkerSymbol();
+			ptSymbol.setStyle(esri.symbol.SimpleMarkerSymbol.STYLE_X);
+			ptSymbol.setOutline(new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color([255,0,0]), 3));
+			ptSymbol.size = 20;
+
+			app.map.graphics.clear();
+			var graphic = new esri.Graphic(wmPt,ptSymbol);
+			app.map.graphics.add(graphic);
+			app.map.centerAndZoom(wmPt, 16);
+		} );
+	}
+
 </script>
 
 <script type="text/javascript">
@@ -2358,6 +2403,20 @@
     </tr>
     <tr><td></td><td><button class="label" onclick="quickZoom('plss');">Go</button></td></tr>
     </table>
+
+    <div id="or"><img src="images/or.jpg" /></div>
+    <table>
+    	<tr><td class="label" align="right">Latitude: </td><td align="left"><input type="text" id="latitude" size="10" /><span class="note" style="font-weight:normal">&nbsp;(ex. 39.12345)</span></td></tr>
+        <tr><td class="label" align="right">Longitude: </td><td align="left"><input type="text" id="longitude" size="10" /><span class="note" style="font-weight:normal">&nbsp;(ex. -95.12345)</span></td></tr>
+        <tr><td class="label" align="right">Datum: </td><td align="left">
+        	<select id="datum">
+        		<option value="nad27">NAD27</option>
+        		<option value="nad83">NAD83</option>
+        		<option value="wgs84">WGS84</option>
+        	</select>
+       	<tr><td></td><td align="left"><button class="label" onclick="zoomToLatLong(dojo.byId('latitude').value,dojo.byId('longitude').value,dojo.byId('datum').value);">Go</button></td></tr>
+    </table>
+
     <div id="or"><img src="images/or.jpg" /></div>
         <table>
         <tr><td class="label">Well API:</td><td></td><td></td><td class="note">(extension optional)</td></tr>
