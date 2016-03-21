@@ -247,7 +247,7 @@
 		pcLithoLayer.setVisibleLayers([2]);
 
 		wellingtonEarthquakesLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis1/rest/services/co2/seismic_1/MapServer", { visible:false });
-		wellingtonEarthquakesLayer.setVisibleLayers([20]);
+		wellingtonEarthquakesLayer.setVisibleLayers([20,21]);
 
 
 
@@ -2220,7 +2220,7 @@
                 </tr>
 
                 <!---<tr>
-                    <td colspan="2"><input type="checkbox" id="wellingtonearthquakes" onClick="changeMap(wellingtonEarthquakesLayer,this,'wellingtonearthquakes','Wellington Array Earthquakes');">Wellington Array &nbsp;&nbsp; <span style="text-decoration:underline;cursor:pointer;font-size:12px;" onclick="dijit.byId('wellingtonquakefilter').show();">Filter</span>&nbsp;&nbsp;&nbsp;<span style="text-decoration:underline;cursor:pointer;font-size:12px;" onclick="dijit.byId('wellingtonquakenotes').show();">Read Me</span></td>
+                    <td colspan="2"><input type="checkbox" id="wellingtonearthquakes" onClick="changeMap(wellingtonEarthquakesLayer,this,'wellingtonearthquakes2','Wellington Array Earthquakes');">Wellington Array &nbsp;&nbsp; <span style="text-decoration:underline;cursor:pointer;font-size:12px;" onclick="dijit.byId('wellingtonquakefilter').show();">Filter</span>&nbsp;&nbsp;&nbsp;<span style="text-decoration:underline;cursor:pointer;font-size:12px;" onclick="dijit.byId('wellingtonquakenotes').show();">Read Me</span></td>
                 </tr>--->
 
                 <tr><td colspan="2"><hr /></td></tr>
