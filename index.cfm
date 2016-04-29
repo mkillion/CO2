@@ -905,7 +905,7 @@
 			layer.show();
 
 			if (title != 'none') {
-				var strAdd = '<BR><B>' + title + '</B><BR><IMG src="http://maps.kgs.ku.edu/mk_test/co2/images/' + legend + '.jpg" />' + dojo.byId("mainlegenddiv").innerHTML;
+				var strAdd = '<BR><B>' + title + '</B><BR><IMG src="http://maps.kgs.ku.edu/co2/images/' + legend + '.jpg" />' + dojo.byId("mainlegenddiv").innerHTML;
 				dojo.byId("mainlegenddiv").innerHTML = strAdd;
 			}
 		}
@@ -916,7 +916,7 @@
 				var inHTML = dojo.byId('mainlegenddiv').innerHTML.toUpperCase();
 				var lg = legend.toUpperCase();
 				var t = title.toUpperCase();
-				var strRemove = '<BR><B>' + t + '</B><BR><IMG SRC="HTTP://MAPS.KGS.KU.EDU/MK_TEST/CO2/IMAGES/' + lg + '.JPG">'.toUpperCase();
+				var strRemove = '<BR><B>' + t + '</B><BR><IMG SRC="HTTP://MAPS.KGS.KU.EDU/CO2/IMAGES/' + lg + '.JPG">'.toUpperCase();
 				dojo.byId('mainlegenddiv').innerHTML = inHTML.replace(strRemove,"");
 			}
 		}
@@ -952,7 +952,7 @@
                     var inHTML = dojo.byId('mainlegenddiv').innerHTML.toUpperCase();
                     var lg = legend.toUpperCase();
                     var t = title.toUpperCase();
-                    var strRemove = '<BR><B>' + t + '</B><BR><IMG SRC="HTTP://MAPS.KGS.KU.EDU/MK_TEST/CO2/IMAGES/' + lg + '.JPG">'.toUpperCase();
+                    var strRemove = '<BR><B>' + t + '</B><BR><IMG SRC="HTTP://MAPS.KGS.KU.EDU/CO2/IMAGES/' + lg + '.JPG">'.toUpperCase();
                     dojo.byId('mainlegenddiv').innerHTML = inHTML.replace(strRemove,"");
                 }
             }
@@ -962,7 +962,7 @@
 
     function addLegend(title, legend) {
         if (title != 'none') {
-            var strAdd = '<BR><B>' + title + '</B><BR><IMG src="http://maps.kgs.ku.edu/mk_test/co2/images/' + legend + '.jpg" />' + dojo.byId("mainlegenddiv").innerHTML;
+            var strAdd = '<BR><B>' + title + '</B><BR><IMG src="http://maps.kgs.ku.edu/co2/images/' + legend + '.jpg" />' + dojo.byId("mainlegenddiv").innerHTML;
             dojo.byId("mainlegenddiv").innerHTML = strAdd;
         }
     }
@@ -2220,7 +2220,7 @@
                 </tr>
 
                 <!---<tr>
-                    <td colspan="2"><input type="checkbox" id="wellingtonearthquakes" onClick="changeMap(wellingtonEarthquakesLayer,this,'wellingtonearthquakes2','Wellington Array Earthquakes');">Wellington Array &nbsp;&nbsp; <span style="text-decoration:underline;cursor:pointer;font-size:12px;" onclick="dijit.byId('wellingtonquakefilter').show();">Filter</span>&nbsp;&nbsp;&nbsp;<span style="text-decoration:underline;cursor:pointer;font-size:12px;" onclick="dijit.byId('wellingtonquakenotes').show();">Read Me</span></td>
+                    <td colspan="2"><input type="checkbox" id="wellingtonearthquakes" onClick="changeMap(wellingtonEarthquakesLayer,this,'wellingtonearthquakes3','Wellington Array Earthquakes');">Wellington Array &nbsp;&nbsp; <span style="text-decoration:underline;cursor:pointer;font-size:12px;" onclick="dijit.byId('wellingtonquakefilter').show();">Filter</span>&nbsp;&nbsp;&nbsp;<span style="text-decoration:underline;cursor:pointer;font-size:12px;" onclick="dijit.byId('wellingtonquakenotes').show();">Read Me</span></td>
                 </tr>--->
 
                 <tr><td colspan="2"><hr /></td></tr>
