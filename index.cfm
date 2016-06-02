@@ -1929,7 +1929,16 @@
         var printParams = new esri.tasks.PrintParameters();
         var template = new esri.tasks.PrintTemplate();
 		var w, h;
-		var printOutSr = new esri.SpatialReference({ wkid:26914 });
+
+		var theExt = esri.geometry.webMercatorToGeographic(app.map.extent);
+		if (theExt.xmin > -96) {
+			var theSR = 3159;
+		} else if (theExt.xmin > -102 && theExt.xmin < 96) {
+			var theSR = 3158;
+		} else if (theExt.xmin < 102) {
+			var theSR = 2957;
+		}
+		var printOutSr = new esri.SpatialReference({ wkid:theSR });
 
 		/*if (dojo.byId('plss').checked) {
 			plssLayer.hide();
