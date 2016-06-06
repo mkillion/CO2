@@ -182,7 +182,7 @@
 		// Define layers:
 		baseLayer = new esri.layers.ArcGISTiledMapServiceLayer("http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer");
 
-		fieldsLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis2/rest/services/oilgas/oilgas_fields/MapServer", { visible:false });
+		fieldsLayer = new esri.layers.ArcGISTiledMapServiceLayer("http://services.kgs.ku.edu/arcgis8/rest/services/oilgas/oilgas_fields/MapServer", { visible:false });
 
 		fieldsFilterRenderLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis1/rest/services/co2/oilgas_fields_co2_rendering/MapServer", { id:"og_fields_render", opacity:1.0, visible:false });
 		fieldsFilterRenderLayer.setVisibleLayers([0]);
@@ -208,7 +208,7 @@
 		hrzWellsLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis1/rest/services/co2/general/MapServer", { visible:false });
 		hrzWellsLayer.setVisibleLayers([11]);
 
-        plssLayer = new esri.layers.ArcGISTiledMapServiceLayer("http://services.kgs.ku.edu/arcgis2/rest/services/plss/plss/MapServer");
+        plssLayer = new esri.layers.ArcGISTiledMapServiceLayer("http://services.kgs.ku.edu/arcgis8/rest/services/plss/plss/MapServer");
 
 
 		var imageServiceParameters = new esri.layers.ImageServiceParameters();
@@ -2107,7 +2107,7 @@
 
 
 	function zoomToLatLong(lat,lon,datum) {
-		var gsvc = new esri.tasks.GeometryService("http://services.kgs.ku.edu/arcgis2/rest/services/Utilities/Geometry/GeometryServer");
+		var gsvc = new esri.tasks.GeometryService("http://services.kgs.ku.edu/arcgis1/rest/services/Utilities/Geometry/GeometryServer");
 		var params = new esri.tasks.ProjectParameters();
 		var wgs84Sr = new esri.SpatialReference( { wkid: 4326 } );
 
@@ -2214,9 +2214,9 @@
                     <td></td>
                 </tr>
 
-                <tr>
+                <!--- <tr>
                     <td colspan="2"><input type="checkbox" id="class1wells" onClick="changeMap(class1WellsLayer,this,'red_tri','Class I Wells');">Class I Injection Wells</td>
-                </tr>
+                </tr> --->
                 <tr>
                     <td colspan="2"><input type="checkbox" id="class2wells" onClick="changeMap(class2WellsLayer,this,'blue_tri','Class II Wells');">Class II Injection Wells</td>
                 </tr>
