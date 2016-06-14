@@ -2214,9 +2214,9 @@
                     <td></td>
                 </tr>
 
-                <!--- <tr>
+                <tr>
                     <td colspan="2"><input type="checkbox" id="class1wells" onClick="changeMap(class1WellsLayer,this,'red_tri','Class I Wells');">Class I Injection Wells</td>
-                </tr> --->
+                </tr>
                 <tr>
                     <td colspan="2"><input type="checkbox" id="class2wells" onClick="changeMap(class2WellsLayer,this,'blue_tri','Class II Wells');">Class II Injection Wells</td>
                 </tr>
