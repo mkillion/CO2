@@ -1924,7 +1924,7 @@
 
 
 	function printPDF() {
-		var printUrl = 'http://services.kgs.ku.edu/arcgis1/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task';
+		var printUrl = 'http://services.kgs.ku.edu/arcgis8/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task';
 		var printTask = new esri.tasks.PrintTask(printUrl);
         var printParams = new esri.tasks.PrintParameters();
         var template = new esri.tasks.PrintTemplate();
