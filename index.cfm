@@ -220,7 +220,7 @@
 
 		naipLayer = new esri.layers.ArcGISImageServiceLayer("http://services.kgs.ku.edu/arcgis7/rest/services/IMAGERY_STATEWIDE/FSA_NAIP_2015_Color/ImageServer", { visible:false, imageServiceParameters:imageServiceParameters });
 
-		nedLayer = new esri.layers.ArcGISImageServiceLayer("http://services.kgs.ku.edu/arcgis/rest/services/Elevation/National_Elevation_Dataset/ImageServer", { visible:false, imageServiceParameters:imageServiceParameters });
+		nedLayer = new esri.layers.ArcGISImageServiceLayer("http://services.kgs.ku.edu/arcgis7/rest/services/Elevation/National_Elevation_Dataset/ImageServer", { visible:false, imageServiceParameters:imageServiceParameters });
 
 		modelAreasLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis1/rest/services/co2/results/MapServer", { visible:true });
 		modelAreasLayer.setVisibleLayers([2]);
