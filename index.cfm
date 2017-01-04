@@ -2601,6 +2601,7 @@
         Year:&nbsp;
         <select name="year" id="year">
             <option value="all" selected>All</option>
+            <option value="2017">2017</option>
             <option value="2016">2016</option>
             <option value="2015">2015</option>
             <option value="2014">2014</option>
@@ -2648,6 +2649,7 @@
         Year:&nbsp;
         <select name="wellingtonyear" id="wellingtonyear">
             <option value="all" selected>All</option>
+            <option value="2017">2017</option>
             <option value="2016">2016</option>
             <option value="2015">2015</option>
             <!--- <option value="2014">2014</option>
