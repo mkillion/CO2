@@ -208,7 +208,7 @@
 		hrzWellsLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://services.kgs.ku.edu/arcgis1/rest/services/co2/general/MapServer", { visible:false });
 		hrzWellsLayer.setVisibleLayers([11]);
 
-        plssLayer = new esri.layers.ArcGISTiledMapServiceLayer("http://services.kgs.ku.edu/arcgis8/rest/services/plss/plss/MapServer");
+        plssLayer = new esri.layers.ArcGISTiledMapServiceLayer("http://services.kgs.ku.edu/arcgis8/rest/services/plss/plss_anno_labels/MapServer");
 
 
 		var imageServiceParameters = new esri.layers.ImageServiceParameters();
